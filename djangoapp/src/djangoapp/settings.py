@@ -25,7 +25,7 @@ SECRET_KEY = '&3(xspivj9*hez$t(a@5jcfr1l^@6o^&%!9h0zj=*3tq3d^3o7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.gorentuiuc.web.illinois.edu', 'gorentuiuc.web.illinois.edu']
 
 
 # Application definition
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'djangoapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Users/hanc3/desktop/project/djangoapp/src/templates'],
+        'DIRS': ['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_mysql',
-        'USER': 'hanc327',
-        'PASSWORD': 'Ch990327',
+        'NAME': 'gorentuiuc_djangoapp_mysql',
+        'USER': 'gorentuiuc_hanc3',
+        'PASSWORD': 'Ch19990327??',
         'PORT': '8889'
     }
 }
