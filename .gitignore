@@ -2,3 +2,4 @@
 **.Python
 djangoapp/venv/
 **.pyc
+**settings.py
