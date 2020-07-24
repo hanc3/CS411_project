@@ -1,0 +1,4 @@
+**.DS_Store
+**.Python
+djangoapp/venv/
+**.pyc
