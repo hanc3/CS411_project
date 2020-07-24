@@ -25,7 +25,7 @@ SECRET_KEY = '&3(xspivj9*hez$t(a@5jcfr1l^@6o^&%!9h0zj=*3tq3d^3o7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.gorentuiuc.web.illinois.edu', 'gorentuiuc.web.illinois.edu']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','www.gorentuiuc.web.illinois.edu', 'gorentuiuc.web.illinois.edu']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # own app
     'appUser',
+    'post'
 ]
 
 MIDDLEWARE = [
@@ -80,9 +81,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gorentuiuc_djangoapp_mysql',
-        'USER': 'gorentuiuc_hanc3',
-        'PASSWORD': 'Ch19990327??',
-        'PORT': '8889'
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
