@@ -11,10 +11,15 @@ class post(models.Model):
     Pub_date        =   models.DateTimeField('data posted')
     Apartment       =   models.CharField(max_length=60)
     Post_title      =   models.TextField()
-    # Description     =   models.TextField()
-    # Move_in_date    =   models.DateField()
-    # Move_out_date   =   models.DateField()
-    # Duration        =   models.IntegerField()
+    Description     =   models.TextField(blank=True)
+    Move_in_date    =   models.DateField()
+    Move_out_date   =   models.DateField()
+    Duration        =   models.IntegerField()
+    Price           =   models.DecimalField(max_digits=7, decimal_places=2)
+    Exist           =   models.BooleanField(default=True)
+    Bedroom         =   models.IntegerField()
+    Bathroom        =   models.IntegerField()
+    Like            =   models.PositiveSmallIntegerField(default=0)
     
     def __str__(self):
         return self.Username

@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import include, path
 from Pages.views import homepage_view
 from post.views import index
+from post.views import Insertrecord
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',homepage_view, name="home"),
-    path('post/', include('post.urls'))
+    path('post/', include('post.urls')),
 ]
  

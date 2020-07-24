@@ -1,9 +1,11 @@
-{% if userlist %}
+{% if postlist %}
     <ul>
-    {% for user in userlist %}
-        <li><a href="{%url 'post:detail' user.Post_id %}">{{ user.Post_title }}</a></li>
+    {% for post in postlist %}
+        <li><a href="{%url 'post:detail' post.Post_id %}">{{ post.Post_title }}</a></li>
     {% endfor %}
     </ul>
+    <a href="{%url 'post:insert' %}">Start new post</a>
 {% else %}
-    <p>No user are available.</p>
+    <p>No post are available.</p>
+    <a href="{%url 'post:insert' %}">Start new post</a>
 {% endif %}
