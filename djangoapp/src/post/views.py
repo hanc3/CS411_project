@@ -39,15 +39,14 @@ def Insertrecord(request):
     
     # form
     if request.method=='POST':
-        if request.POST.get('Post_title') and request.POST.get('id_id') \
+        if request.POST.get('Post_title') and request.POST.get('Duration') \
             and request.POST.get('ApartmentID') and request.POST.get('Move_in_date')\
             and request.POST.get('Move_out_date') and request.POST.get('Price')\
-            and request.POST.get('Bedroom') and request.POST.get('Bathroom') and request.POST.get('Duration'):
+            and request.POST.get('Bedroom') and request.POST.get('Bathroom'):
             
             # store the values
             saverecord=post()
             saverecord.Post_title = request.POST.get('Post_title')
-            saverecord.id_id = request.POST.get('id_id')
             saverecord.ApartmentID_id = request.POST.get('ApartmentID')
             saverecord.Pub_date = timezone.now()
             saverecord.Move_out_date = request.POST.get('Move_out_date')
@@ -56,6 +55,12 @@ def Insertrecord(request):
             saverecord.Bedroom = request.POST.get('Bedroom')
             saverecord.Bathroom = request.POST.get('Bathroom')
             saverecord.Duration = request.POST.get('Duration')
+
+            # id is the primary key of appUser, but request.user.id gets the id of auth_user table
+            with connection.cursor() as c1:
+                c1.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
+                user = namedtuplefetchall(c1)
+            saverecord.id_id = user[0].id
             
             # find apartment name in the apartment table
             with connection.cursor() as c1:
