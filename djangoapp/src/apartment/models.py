@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class apartment(models.Model):
     ApartmentID     =   models.AutoField(primary_key=True)
-    Name            =   models.CharField(max_length=60)
+    Name            =   models.CharField(max_length=60, unique=True)
     Description     =   models.TextField(blank=True)
     Location        =   models.TextField(blank=True)
     Email           =   models.CharField(max_length=30)
