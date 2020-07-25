@@ -61,8 +61,16 @@
               <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Sign Up <i class="fas fa-user-plus"></i></a></li>
-              <li><a href="#">Log in <i class="fas fa-user"></i></a></li>
+              <!-- IF USER Logged in -->
+              {% if user.is_authenticated %}
+                <!-- NOTE: Different URL than home.html -->
+                <li><a href="../../appUser/profile">Profile<i class="fas fa-user"></i></a></li>
+                <li><a href="../../appUser/logout">Log out<i class="fas fa-user"></i></a></li>
+              {% else %}
+              <!-- Not Logged in -->
+                <li><a href="../../appUser/register">Sign Up <i class="fas fa-user-plus"></i></a></li>
+                <li><a href="../../appUser/login">Log in <i class="fas fa-user"></i></a></li>
+              {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

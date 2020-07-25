@@ -5,6 +5,8 @@ from django.db import connection
 from collections import namedtuple
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 # user collections.namedtuple() from the Python standard library
@@ -28,6 +30,7 @@ def detail(request, Post_id):
         result = namedtuplefetchall(c)
     return render(request, 'post/detail.html', {'info': result[0]})
 
+@login_required(login_url='../../appUser/login')
 def Insertrecord(request):
     # return apartment list
     with connection.cursor() as c:

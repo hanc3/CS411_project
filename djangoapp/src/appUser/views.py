@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db import connection
 from .forms import UserRegisterForm
 
@@ -24,14 +25,14 @@ def register(request):
                 SET @cur_id = -1;
                 SELECT id INTO @cur_id FROM auth_user WHERE username = \'{0}\';
 
-                INSERT INTO appUser_appuser (id, gender, bio, phone, num_of_post, user_id)
-                VALUES ({1}, \"{2}\", \"{3}\", \"{4}\", {5}, @cur_id);
-             """.format(username, 0, gender, "", phone, 0))
+                INSERT INTO appUser_appuser (id, username, gender, bio, phone, num_of_post, user_id)
+                VALUES ({1}, \"{2}\", \"{3}\", \"{4}\", \"{5}\", {6}, @cur_id);
+             """.format(username, 0, username, gender, "", phone, 0))
             
 
             # display success msg
-            messages.success(request, f'Account created for {username}!')
-            return redirect('../profile')
+            messages.success(request, f'{username} - Your account has been created! You are now able to log in!')
+            return redirect('../login')
     else:
         # Empty Form
         form = UserRegisterForm()
@@ -39,6 +40,7 @@ def register(request):
     return render(request, 'appUser/register.html',{'form':form})
 
 
+@login_required(login_url='../login')
 def profile(request):
     return render(request, 'appUser/profile.html', {})
 
