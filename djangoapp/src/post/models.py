@@ -20,4 +20,3 @@ class post(models.Model):
     Bedroom         =   models.IntegerField()
     Bathroom        =   models.IntegerField()
     Likes           =   models.IntegerField()
-    

@@ -18,6 +18,7 @@ cd src
 ```
 - To add default value:
 ```bash
+# https://pypi.org/project/django-add-default-value/
 # Drop table need to add default value
 python manage.py makemigrations
 

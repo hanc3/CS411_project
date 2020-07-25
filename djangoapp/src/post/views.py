@@ -12,14 +12,14 @@ def index(request):
     with connection.cursor() as c:
         c.execute("select Post_id, Post_title from post_post order by Pub_date desc")
         result = namedtuplefetchall(c)
-    return render(request, 'post.html', {'postlist': result})
+    return render(request, 'post/post.html', {'postlist': result})
 
 # detail of the post
 def detail(request, Post_id):
     with connection.cursor() as c:
         c.execute("select * from post_post where Post_id = %s",[Post_id])
         result = namedtuplefetchall(c)
-    return render(request, 'detail.html', {'info': result[0]})
+    return render(request, 'post/detail.html', {'info': result[0]})
 
 def Insertrecord(request):
     if request.method=='POST':
@@ -54,11 +54,11 @@ def Insertrecord(request):
                     c.execute(" insert into post_post(Post_title, id_id, Apartment, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Duration)\
                                 value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.Apartment, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration])
             messages.success(request, 'Post successfully')
-            return render(request, 'insertpost.html')
+            return render(request, 'post/insertpost.html')
         else:
-            return render(request, 'insertpost.html')
+            return render(request, 'post/insertpost.html')
     else:
-        return render(request, 'insertpost.html')
+        return render(request, 'post/insertpost.html')
 
 # user collections.namedtuple() from the Python standard library
 def namedtuplefetchall(cursor):
