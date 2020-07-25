@@ -68,32 +68,52 @@ def Insertrecord(request):
                 apartment = namedtuplefetchall(c1)
             saverecord.Apartment = apartment[0].Name
 
-            # if there is Description
-            if request.POST.get('Description'):
-                saverecord.Description = request.POST.get('Description')
-                with connection.cursor() as c:
-                    c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Description, Duration, Apartment)\
-                                value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Description, saverecord.Duration, saverecord.Apartment])
-            
-            # no Description
-            else:
-                with connection.cursor() as c:
-                    c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Duration, Apartment)\
-                                value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration, saverecord.Apartment])
+            with connection.cursor() as c1:
+                c1.execute("select Post_title from post_post\
+                            where Post_title = %s and\
+                                  ApartmentID_id = %s and\
+                                  Move_out_date = %s and\
+                                  Move_in_date = %s and\
+                                  Price = %s and\
+                                  Bedroom = %s and\
+                                  Bathroom = %s and\
+                                  Duration = %s and\
+                                  id_id = %s",[saverecord.Post_title, saverecord.ApartmentID_id, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration, saverecord.id_id])
+                value = namedtuplefetchall(c1)
 
-            # update number of post of the user
-            with connection.cursor() as c:
-                c.execute(" update appuser_appuser\
-                            set num_of_post = num_of_post + 1\
-                            where id = %s", [saverecord.id_id])
-            
-            messages.success(request, 'Post successfully')
-            return render(request, 'post/insertpost.html', {'apartments': result})
+            # check if the post exist
+            if not value:
+                # if there is Description
+                if request.POST.get('Description'):
+                    saverecord.Description = request.POST.get('Description')
+                    with connection.cursor() as c:
+                        c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Description, Duration, Apartment)\
+                                    value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Description, saverecord.Duration, saverecord.Apartment])
+                
+                # no Description
+                else:
+                    with connection.cursor() as c:
+                        c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Duration, Apartment)\
+                                    value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration, saverecord.Apartment])
+
+                # update number of post of the user
+                with connection.cursor() as c:
+                    c.execute(" update appuser_appuser\
+                                set num_of_post = num_of_post + 1\
+                                where id = %s", [saverecord.id_id])
+                
+                messages.success(request, 'Post successfully')
+            else:
+                messages.success(request, 'Repeatly Post')
+            return index(request)
         else:
             return render(request, 'post/insertpost.html', {'apartments': result})
     else:
         return render(request, 'post/insertpost.html', {'apartments': result})
 
 # def Search(request):
-
+#     query = []
+#     value = []
+#     if request.method=='POST':
+#         if 
 
