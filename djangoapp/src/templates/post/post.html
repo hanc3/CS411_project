@@ -57,8 +57,12 @@
             text-align: center;
         }
         .button {
-            margin-top: 10px;
+            margin-top: 50px;
             text-align: center;
+        }
+        .else {
+          margin-top: 60px;
+          text-align: center;
         }
     </style>
 </head>
@@ -108,8 +112,10 @@
     </div>
     <div class="button"><a href="{%url 'post:insert' %}" class="btn btn-warning" >Start new post</a></div>
 {% else %}
-    <p>No post are available.</p>
+<div class="else">
+    <h1>No post are available.</h1>
     <div class="button"><a href="{%url 'post:insert' %}" class="btn btn-warning" >Start new post</a></div>
+  </div>
 {% endif %}
 
 

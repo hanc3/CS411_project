@@ -1,27 +1,94 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    
-    {% if title %}
-        <title> GoRent! - {{ title }} </title>
-    {% else %}
-        <title> GoRent! </title>
-    {% endif %}
+    <title>
+        GoRent!
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <style>
+  body {
+  /* text-align: center;
+  padding-top: 25%; */
+  background: url(https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+html {
+  height: 100%;
+  max-height: 100%;
+}
+h1 {
+  font-size: 5em;
+  font-family: Lato;
+  font-weight: 700;
+}
+h3 {
+  font-family: Lato;
+  font-weight: 700;
+  /* font-size: 1.5em; */
+}
+hr {
+  width: 400px;
+  border-top: 1px solid #f8f8f8;
+  border-bottom: 1px solid rgb(0,0,0.2);
+}
+#content {
+  text-align: center;
+  margin: auto;
+  /* margin-top: 20%; */
+}
+.content-section {
+    width: 33.3%;
+    margin: auto;
+    margin-top: 10%;
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 5%;
+}
+         
+    </style>
 </head>
 <body>
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-8">
-            {% block content %}{% endblock %}
-            </div>
-        </div>
-        </main>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Purrfect Match</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <!-- IF USER Logged in -->
+              {% if user.is_authenticated %}
+                <li><a href="appUser/profile">Profile <i class="fas fa-user"></i></a></li>
+                <li><a href="appUser/logout">Log out <i class="fas fa-user"></i></a></li>
+              {% else %}
+              <!-- Not Logged in -->
+                <li><a href="appUser/register">Sign Up <i class="fas fa-user-plus"></i></a></li>
+                <li><a href="appUser/login">Log in <i class="fas fa-user"></i></a></li>
+              {% endif %}
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+  <div class="container">
+    <div id="content"class="row">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
 </body>
 </html>
-
-
