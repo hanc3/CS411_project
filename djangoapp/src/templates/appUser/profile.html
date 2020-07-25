@@ -1,16 +1,15 @@
 {% extends "appUser/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <!-- success msg -->
-    {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade-in">
-            <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success! </strong> {{ message }}
-        </div>
-    {% endfor %}
-    {% endif %}
-
-    <!-- PLACEHOLDER -->
-    <h1> THIS IS USER PROFILE PAGE! </h1>
-
+   <div class="content-section">
+       <div class="media">
+            <!-- TODO: Fix Image URL!!! -->
+           <img class="rounded-circle account-img" src="{{ user.appuser.image.url }}">
+           <div class="media-body">
+               <h2 class="account-heading">{{ user.username }}</h2>
+               <p class="text-secondary">{{ user.email }}</p>
+           </div>
+       </div>
+       <!-- From Here -->
+   </div>
 {% endblock content %}
