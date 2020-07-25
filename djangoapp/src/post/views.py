@@ -7,6 +7,13 @@ from django.utils import timezone
 from django.contrib import messages
 
 # Create your views here.
+# user collections.namedtuple() from the Python standard library
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
+
 # list the posts
 def index(request):
     with connection.cursor() as c:
@@ -79,9 +86,6 @@ def Insertrecord(request):
     else:
         return render(request, 'post/insertpost.html', {'apartments': result})
 
-# user collections.namedtuple() from the Python standard library
-def namedtuplefetchall(cursor):
-    "Return all rows from a cursor as a namedtuple"
-    desc = cursor.description
-    nt_result = namedtuple('Result', [col[0] for col in desc])
-    return [nt_result(*row) for row in cursor.fetchall()]
+# def Search(request):
+
+
