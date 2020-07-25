@@ -7,7 +7,7 @@ from appUser.models import appUser
 # Create your models here.
 class post(models.Model):
     Post_id         =   models.AutoField(primary_key=True)
-    Username        =   models.ForeignKey(appUser, on_delete=models.CASCADE)
+    id              =   models.ForeignKey(appUser, on_delete=models.CASCADE)
     Pub_date        =   models.DateTimeField('data posted')
     Apartment       =   models.CharField(max_length=60)
     Post_title      =   models.TextField()

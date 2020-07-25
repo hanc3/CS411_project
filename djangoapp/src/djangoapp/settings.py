@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     # own app
     'appUser',
-    'post'
+    'post',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

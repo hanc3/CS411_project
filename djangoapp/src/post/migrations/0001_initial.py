@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('Bedroom', models.IntegerField()),
                 ('Bathroom', models.IntegerField()),
                 ('Likes', models.IntegerField()),
-                ('Username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='appUser.appUser')),
+                ('id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='appUser.appUser')),
             ],
         ),
         AddDefaultValue(
