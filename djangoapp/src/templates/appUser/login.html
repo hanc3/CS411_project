@@ -1,0 +1,33 @@
+{% extends "appUser/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- success msg -->
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade-in">
+                    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success! </strong> {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+            <!-- FORM -->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <!-- Sign Up BUTTON -->
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+            </div>
+        </form>
+        <!-- Sign In Option -->
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need an account? <a class="ml-2" href="../register">Sign Up</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}
