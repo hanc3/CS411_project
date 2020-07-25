@@ -13,5 +13,5 @@ urlpatterns = [
     # path of insert a new post
     path('insertion/', views.Insertrecord, name='insert'),
 
-    path('search/', views.Search, name='search'),
+    path('filter/', views.Filter, name='filter'),
 ]

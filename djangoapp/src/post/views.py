@@ -21,7 +21,20 @@ def index(request):
     with connection.cursor() as c:
         c.execute("select Post_id, Post_title, Description from post_post order by Pub_date desc")
         result = namedtuplefetchall(c)
-    return render(request, 'post/post.html', {'postlist': result})
+    if request.method=='POST':
+        if request.POST.get('search'):
+            title = '%' + str(request.POST.get('search')) + '%'
+            with connection.cursor() as c1:
+                c1.execute("select Post_id, Post_title, Description\
+                            from post_post\
+                            where Post_title like %s\
+                            order by Pub_date desc", [title])
+                search_result = namedtuplefetchall(c1)
+            return render(request, 'post/post.html', {'postlist': search_result})
+        else:
+            return render(request, 'post/post.html', {'postlist': result})
+    else:
+        return render(request, 'post/post.html', {'postlist': result})
 
 # detail of the post
 def detail(request, Post_id):
@@ -107,7 +120,11 @@ def Insertrecord(request):
     else:
         return render(request, 'post/insertpost.html', {'apartments': result})
 
-def Search(request):
+def Filter(request):
+    # return apartment list
+    with connection.cursor() as c:
+        c.execute("select Name, ApartmentID from apartment_apartment")
+        apartment = namedtuplefetchall(c)
     query = []
     value = []
     if request.method=='POST':
@@ -124,6 +141,22 @@ def Search(request):
             query.append('a.Gym = %s ')
             value.append(1)
 
+        if request.POST.get('Price'):
+            query.append('p.Price <= %s ')
+            value.append(request.POST.get('Price'))
+        
+        if request.POST.get('Move_in_date'):
+            query.append('p.Move_in_date <= %s ')
+            value.append(request.POST.get('Move_in_date'))
+        
+        if request.POST.get('Move_out_date'):
+            query.append('p.Move_in_date >= %s ')
+            value.append(request.POST.get('Move_out_date'))
+
+        # if request.POST.get('Duration'):
+        #     print("duration:")
+        #     print(request.POST.get('Duration'))
+
         order = request.POST.get('order')
 
         input_query = 'select * from post_post p left join apartment_apartment a on p.ApartmentID_id = a.ApartmentID '
@@ -137,7 +170,7 @@ def Search(request):
         with connection.cursor() as c:
             c.execute(input_query, value)
             result = namedtuplefetchall(c)
-        return render(request, 'post/search_result.html', {'postlist': result})
+        return render(request, 'post/filter_result.html', {'postlist': result, 'apartments': apartment})
 
     else:
-        return render(request, 'post/search.html') 
+        return render(request, 'post/filter.html', {'apartments': apartment})
