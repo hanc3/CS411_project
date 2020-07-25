@@ -31,7 +31,7 @@ def register(request):
 
             # display success msg
             messages.success(request, f'Account created for {username}!')
-            return redirect('profile')
+            return redirect('../profile')
     else:
         # Empty Form
         form = UserRegisterForm()
