@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import post
 from django.db import connection
@@ -88,7 +88,8 @@ def Insertrecord(request):
                             where id = %s", [saverecord.id_id])
             
             messages.success(request, 'Post successfully')
-            return render(request, 'post/insertpost.html', {'apartments': result})
+            # TODO: right now it redirects to all posts, better go to the detailed page.
+            return redirect('../')
         else:
             return render(request, 'post/insertpost.html', {'apartments': result})
     else:
