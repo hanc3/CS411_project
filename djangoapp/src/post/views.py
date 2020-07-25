@@ -45,7 +45,7 @@ def Insertrecord(request):
             else:
                 with connection.cursor() as c:
                     c.execute(" insert into post_post(Post_title, Username_id, Apartment, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Duration)\
-                                value(%s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.Username_id, saverecord.Apartment, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration])
+                                value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.Username_id, saverecord.Apartment, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration])
             messages.success(request, 'Post successfully')
             return render(request, 'insertpost.html')
     else:

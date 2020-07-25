@@ -19,10 +19,5 @@ class post(models.Model):
     Exist           =   models.BooleanField(default=True)
     Bedroom         =   models.IntegerField()
     Bathroom        =   models.IntegerField()
-    Like            =   models.PositiveSmallIntegerField(default=0)
+    Likes           =   models.IntegerField()
     
-    def __str__(self):
-        return self.Username
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
