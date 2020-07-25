@@ -19,7 +19,7 @@ def namedtuplefetchall(cursor):
 # list the posts
 def index(request):
     with connection.cursor() as c:
-        c.execute("select Post_id, Post_title from post_post order by Pub_date desc")
+        c.execute("select Post_id, Post_title, Description from post_post order by Pub_date desc")
         result = namedtuplefetchall(c)
     return render(request, 'post/post.html', {'postlist': result})
 
@@ -115,5 +115,20 @@ def Insertrecord(request):
 #     query = []
 #     value = []
 #     if request.method=='POST':
-#         if 
+#         if request.POST.get('Pet_friendly'):
+#             query.append('a.Pet_friendly = %s ')
+#             value.append(1)
+#         if request.POST.get('Swimming_pool'):
+#             query.append('a.Swimming_pool = %s ')
+#             value.append(1)
+#         if request.POST.get('Printer'):
+#             query.append('a.Printer = %s ')
+#             value.append(1)
+#         if request.POST.get('Gym'):
+#             query.append('a.Gym = %s ')
+#             value.append(1)
+
+#         input_query = 'select * from post_post p natural join apartment_apartment a where '
+#         for str in query:
+#             input_query = input_query +
 
