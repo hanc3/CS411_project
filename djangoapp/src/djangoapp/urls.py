@@ -18,9 +18,11 @@ from django.urls import include, path
 from Pages.views import homepage_view
 from post.views import index
 from post.views import Insertrecord
+from appUser import views as appUser_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',homepage_view, name="home"),
+    path('register/',appUser_view.register, name='register'),
+    path('profile/',appUser_view.profile, name='profile'),
     path('post/', include('post.urls')),
 ]
- 
