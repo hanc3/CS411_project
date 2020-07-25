@@ -136,7 +136,7 @@ LOGIN_REDIRECT_URL = 'home'
 # NOTE: say if we want to access a page
 # that requires logging in, this will redirect the 
 # page to log-in page first
-LOGIN_URL = '../login'
+# LOGIN_URL = '../login'
 
 # TODO: FIX IMAGE URL! 
 # NOTE: Place to store user img!

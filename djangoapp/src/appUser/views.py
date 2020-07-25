@@ -40,7 +40,7 @@ def register(request):
     return render(request, 'appUser/register.html',{'form':form})
 
 
-@login_required
+@login_required(login_url='../login')
 def profile(request):
     return render(request, 'appUser/profile.html', {})
 
