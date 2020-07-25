@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import post
 from django.db import connection
@@ -101,34 +101,43 @@ def Insertrecord(request):
                     c.execute(" update appuser_appuser\
                                 set num_of_post = num_of_post + 1\
                                 where id = %s", [saverecord.id_id])
-                
-                messages.success(request, 'Post successfully')
-            else:
-                messages.success(request, 'Repeatly Post')
-            return index(request)
+            return redirect('../')
         else:
             return render(request, 'post/insertpost.html', {'apartments': result})
     else:
         return render(request, 'post/insertpost.html', {'apartments': result})
 
-# def Search(request):
-#     query = []
-#     value = []
-#     if request.method=='POST':
-#         if request.POST.get('Pet_friendly'):
-#             query.append('a.Pet_friendly = %s ')
-#             value.append(1)
-#         if request.POST.get('Swimming_pool'):
-#             query.append('a.Swimming_pool = %s ')
-#             value.append(1)
-#         if request.POST.get('Printer'):
-#             query.append('a.Printer = %s ')
-#             value.append(1)
-#         if request.POST.get('Gym'):
-#             query.append('a.Gym = %s ')
-#             value.append(1)
+def Search(request):
+    query = []
+    value = []
+    if request.method=='POST':
+        if request.POST.get('Pet_friendly'):
+            query.append('a.Pet_friendly = %s ')
+            value.append(1)
+        if request.POST.get('Swimming_pool'):
+            query.append('a.Swimming_pool = %s ')
+            value.append(1)
+        if request.POST.get('Printer'):
+            query.append('a.Printer = %s ')
+            value.append(1)
+        if request.POST.get('Gym'):
+            query.append('a.Gym = %s ')
+            value.append(1)
 
-#         input_query = 'select * from post_post p natural join apartment_apartment a where '
-#         for str in query:
-#             input_query = input_query +
+        order = request.POST.get('order')
 
+        input_query = 'select * from post_post p left join apartment_apartment a on p.ApartmentID_id = a.ApartmentID '
+        for i in range(len(query)):
+            if (i == 0):
+                input_query += 'where '
+            input_query += query[i]
+            if (i != len(query) - 1):
+                input_query += 'and '
+        input_query = input_query + 'order by ' + order
+        with connection.cursor() as c:
+            c.execute(input_query, value)
+            result = namedtuplefetchall(c)
+        return render(request, 'post/search_result.html', {'postlist': result})
+
+    else:
+        return render(request, 'post/search.html') 

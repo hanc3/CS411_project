@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('ApartmentID', models.AutoField(primary_key=True, serialize=False)),
                 ('Name', models.CharField(max_length=60, unique=True)),
-                ('Description', models.TextField(blank=True)),
+                ('Description_a', models.TextField(blank=True)),
                 ('Location', models.TextField(blank=True)),
                 ('Email', models.CharField(max_length=30)),
                 ('Phone', models.CharField(max_length=11)),
