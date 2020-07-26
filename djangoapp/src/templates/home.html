@@ -5,7 +5,12 @@
     <h1>GoRent</h1>
     <h3>The Most Popular Renting App in UIUC</h3>
     <hr>
-    <button class="btn-default btn-lg"><i class="fas fa-home"></i> Get Started!</button>
+    <!-- TODO: FIX BUTTON href TO THE CORRESPONDING PAGE -->
+    {% if user.is_authenticated %}
+      <button class="btn-default btn-lg" ><i class="fas fa-home" href="{%url 'post:index' %}"></i> Find Your Home Now!</button>
+    {% else %}
+      <button class="btn-default btn-lg" ><i class="fas fa-home" href="{%url 'appUser:register' %}"></i> Get Started!</button>
+    {% endif %}
   </div>
 
 {% endblock hometitle %}
