@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<head>
+    <title>New Post</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
+    <style>
+        body {
+        /* text-align: center;
+        padding-top: 25%; */
+        background: url(https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
+        background-size: cover;
+        background-position: center;
+        color: white;
+      }
+      #post_modal {
+          border-radius: 5%;
+          border-color: azure;
+          background-color: white;
+          margin: auto;
+          margin-top: 100px;
+          width: 80%;
+          padding: 10px;
+      }
+      h1 {
+        color: black;
+        text-align: center;
+        font-family: 'Yanone Kaffeesatz', sans-serif;
+      }
+      label {
+          color: black;
+          font-family: 'Yanone Kaffeesatz', sans-serif;
+      }
+      #insert {
+          text-align: center;
+      }
+      input {
+          color: black;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Purrfect Match</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="/post">Posts</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Sign Up <i class="fas fa-user-plus"></i></a></li>
+              <li><a href="#">Log in <i class="fas fa-user"></i></a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <div id="post_modal">
+    <h1>Filter</h1>
+    <hr/>
+        <form method="POST" style="color:black;">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="order">Order the result by</label>
+              <select name="order" id="order">
+                <option value='Pub_date desc'>Post Time</option>
+                <option value='Likes desc'>Most Like</option>
+                <option value='Price'>Low Price</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" class="form-control" id="Pet_friendly" name="Pet_friendly" value=1/>
+                <label for="Pet_friendly">Pet Friendly</label>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" class="form-control" id="Swimming_pool" name="Swimming_pool" value=1/>
+                <label for="Swimming_pool">Swimming Pool</label>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" class="form-control" id="Printer" name="Printer" value=1/>
+                <label for="Printer">Printer</label>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" class="form-control" id="Gym" name="Gym" value=1/>
+                <label for="Gym">Gym</label>
+            </div>
+
+            <!-- TODO: https://codepen.io/rendykstan/pen/VLqZGO -->
+            <div class="form-group">
+            <label for="price">Price Range (between 0 and 2000)</label>
+              <section class="range-slider">
+                <span class="rangeValues"></span>
+                <input min="0" max="2000" step="50" type="range" name="Price">
+              </section>
+            </div>
+
+            <div class="form-group">
+              <label for="date_in">Move in Date</label>
+              <input type="date" id="date_in" name="Move_in_date"/>
+            </div>
+
+            <div class="form-group">
+              <label for="date_out">Move out Date</label>
+              <input type="date" id="date_out" name="Move_out_date"/>
+            </div>
+
+            
+
+            <!-- <p>If you don't care the following condition, please leave it blank or choose the top empty choice.</p>
+            <div class="form-group">
+            <label for="Duration">Number of month you want to lease</label>
+              <select name="Duration" id="Duration" multiple>
+                <option value=0></option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+                <option value=9>9</option>
+                <option value=10>10</option>
+                <option value=11>11</option>
+                <option value=12>12</option>
+              </select>
+            </div> -->
+
+            <div class="form-group">
+              <label for="num_bed">Number of Bedroom</label>
+              <input type="number" class="custom-range" id="num_bed" name="Bedroom" min="0" max="10" step="1"/>
+            </div>
+
+            <div class="form-group">
+              <label for="num_bath">Number of Bathroom</label>
+              <input type="number" class="custom-range" id="num_bath" name="Bathroom" min="0" max="10" step="1"/>
+            </div>
+
+            <div class="form-group">
+              <label for="duration">Duration</label>
+              <input type="number" class="custom-range" id="duration" name="Duration" min="0" max="24" step="1" />
+            </div>
+
+            <!-- <div class="form-group">
+            <label for="Bedroom">Number of bedroom</label>
+              <select name="Bedroom" id="Bedroom" multiple>
+                <option value=0></option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="Bathroom">Number of bathroom</label>
+                <select name="Bathroom" id="Bathroom" multiple>
+                  <option value=0></option>
+                  <option value=0></option>
+                  <option value=1>1</option>
+                  <option value=2>2</option>
+                  <option value=3>3</option>
+                  <option value=4>4</option>
+                  <option value=5>5</option>
+                  <option value=6>6</option>
+                  <option value=7>7</option>
+                  <option value=8>8</option>
+                </select>
+              </div> -->
+
+            <div id="insert"><button type="submit" class="btn-lg btn-primary">Submit</button></div>
+                                
+            {% if messages %}
+                {% for message in messages %}
+                    <h2 style='color:green;'>{{message}}</h2>
+                {% endfor %}
+            {% endif %}
+        </form>
+    <hr/>
+    </div>
+</body>
+</html>
