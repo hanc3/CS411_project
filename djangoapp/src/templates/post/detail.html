@@ -8,13 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
     <style>
-        body {
-        /* text-align: center;
-        padding-top: 25%; */
-        background-color: #ccf2ff;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+      body {
+      /* text-align: center;
+      padding-top: 25%; */
+      background-color: #ccf2ff;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       }
       html {
           height: 100%;
@@ -61,10 +61,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
-              <li><a href="{%url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
-              <li><a href="{%url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
-              <!-- Not Logged in -->
+                <!-- Not Logged in -->
                 <li><a href="{%url 'appUser:register' %}">Sign Up <i class="fas fa-user-plus"></i></a></li>
                 <li><a href="{%url 'appUser:login' %}">Log in <i class="fas fa-user"></i></a></li>
               {% endif %}
@@ -82,7 +82,7 @@
     </div>
     <div class="subtitle">
         <h3 style="float: left;"> Location: {{ info.Apartment }}</h3>
-        <h3 style="float: right">Created by: {{ info.Username_id }}</h3>
+        <h3 style="float: right"> Created by: {{ info.Username_id }}</h3>
     </div>
     <div class="description">
         <h4>{{ info.Description }}</h4>
