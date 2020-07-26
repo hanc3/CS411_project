@@ -57,19 +57,18 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="/post">Posts</a></li>
+              <li><a href="{%url 'post:index' %}">Posts</a></li>
+              <li><a href="#">About</a></li>
               <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <!-- IF USER Logged in -->
               {% if user.is_authenticated %}
-                <!-- NOTE: Different URL than home.html -->
-                <li><a href="../../appUser/profile">Profile<i class="fas fa-user"></i></a></li>
-                <li><a href="../../appUser/logout">Log out<i class="fas fa-user"></i></a></li>
+              <li><a href="{%url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+              <li><a href="{%url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
               <!-- Not Logged in -->
-                <li><a href="../../appUser/register">Sign Up <i class="fas fa-user-plus"></i></a></li>
-                <li><a href="../../appUser/login">Log in <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:register' %}">Sign Up <i class="fas fa-user-plus"></i></a></li>
+                <li><a href="{%url 'appUser:login' %}">Log in <i class="fas fa-user"></i></a></li>
               {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -94,18 +93,16 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="Describe your apartment" name="Description"/>
+                <input type="text" class="form-control" id="description" placeholder="Describe your apartment" name="Description">
             </div>
             
-            <!-- TODO:
-            set date min to be today -->
             <div class="form-group">
                 <label for="date_in">Move in Date</label>
-                <input type="date" id="date_in" name="Move_in_date" required/>
+                <input type="date" id="date_in" name="Move_in_date" min="{{date}}" required/>
             </div>
             <div class="form-group">
                 <label for="date_out">Move out Date</label>
-                <input type="date" id="date_out" name="Move_out_date" required/>
+                <input type="date" id="date_out" name="Move_out_date" min="{{date}}" required/>
             </div>
               
             <div class="form-group">

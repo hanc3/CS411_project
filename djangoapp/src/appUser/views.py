@@ -4,13 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 from .forms import UserRegisterForm
 from collections import namedtuple
-
+from datetime import datetime
 
 def namedtuplefetchall(cursor):
     "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
+
 # Create your views here.
 def register(request):
     # if it's a POST request
@@ -65,3 +66,109 @@ def profile(request):
 
 def update(request):
     return render(request, 'appUser/update.html', {})
+
+@login_required(login_url='../../appUser/login')
+def post(request):
+    with connection.cursor() as c1:
+        c1.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
+        user = namedtuplefetchall(c1)
+    id_id = user[0].id
+
+    with connection.cursor() as c:
+        c.execute("select Post_id, Post_title, Description from post_post where id_id = %s order by Pub_date desc", [id_id])
+        result = namedtuplefetchall(c)
+
+    if request.method=='POST':
+        if request.POST.get('search'):
+            title = '%' + str(request.POST.get('search')) + '%'
+            with connection.cursor() as c1:
+                c1.execute("select Post_id, Post_title, Description\
+                            from post_post\
+                            where Post_title like %s\
+                                  and id_id = %s\
+                            order by Pub_date desc", [title, id_id])
+                search_result = namedtuplefetchall(c1)
+            return render(request, 'appUser/post.html', {'postlist': search_result})
+        else:
+            return render(request, 'appUser/post.html', {'postlist': result})
+    else:
+        return render(request, 'appUser/post.html', {'postlist': result})
+
+@login_required(login_url='../../appUser/login')
+def editPost(request, Post_id):
+    with connection.cursor() as c:
+        c.execute("select Name, ApartmentID from apartment_apartment")
+        apartment = namedtuplefetchall(c)
+    with connection.cursor() as c:
+        c.execute("select * from post_post where Post_id = %s",[Post_id])
+        result = namedtuplefetchall(c)
+    date = str(datetime.date(datetime.now()))
+    move_in = str(result[0].Move_in_date)
+    move_out = str(result[0].Move_out_date)
+    query = []
+    value = []
+    if request.method=='POST':
+        if request.POST.get('Post_title') and request.POST.get('Post_title') != result[0].Post_title:
+            query.append('Post_title = %s ')
+            value.append(request.POST.get('Post_title'))
+
+        if request.POST.get('ApartmentID') and request.POST.get('ApartmentID') != result[0].ApartmentID_id:
+            # find apartment name in the apartment table
+            with connection.cursor() as c1:
+                c1.execute("select Name from apartment_apartment where ApartmentID = %s",[request.POST.get('ApartmentID')])
+                apartment = namedtuplefetchall(c1)
+            query.append('ApartmentID_id = %s, Apartment = %s ')
+            value.append(request.POST.get('ApartmentID'))
+            value.append(apartment[0].Name)
+        
+        if request.POST.get('Description') and request.POST.get('Description') != result[0].Description:
+            query.append('Description = %s ')
+            value.append(request.POST.get('Description'))
+
+        if request.POST.get('Move_in_date') and request.POST.get('Move_in_date') != result[0].Move_in_date:
+            query.append('Move_in_date = %s ')
+            value.append(request.POST.get('Move_in_date'))
+
+        if request.POST.get('Move_out_date') and request.POST.get('Move_out_date') != result[0].Move_out_date:
+            query.append('Move_out_date = %s ')
+            value.append(request.POST.get('Move_out_date'))
+        
+        if request.POST.get('Duration') and request.POST.get('Duration') != result[0].Duration:
+            query.append('Duration = %s ')
+            value.append(request.POST.get('Duration'))
+        
+        if request.POST.get('Price') and request.POST.get('Price') != result[0].Price:
+            query.append('Price = %s ')
+            value.append(request.POST.get('Price'))
+
+        if request.POST.get('Bathroom') and request.POST.get('Bathroom') != result[0].Bathroom:
+            query.append('Bathroom = %s ')
+            value.append(request.POST.get('Bathroom'))
+        
+        if request.POST.get('Bedroom') and request.POST.get('Bedroom') != result[0].Bedroom:
+            query.append('Bedroom = %s ')
+            value.append(request.POST.get('Bedroom'))
+        
+        if len(query) != 0:
+            input_query = "update post_post set "
+            for i in range(len(query)):
+                input_query += query[i]
+                if (i != len(query) - 1):
+                    input_query += ', '
+            input_query += "where Post_id = %s"
+            value.append(Post_id)
+            print(input_query)
+            with connection.cursor() as c:
+                c.execute(input_query, value)
+        
+        return redirect('../../')
+
+    return render(request, 'appUser/editPost.html', {'info': result[0], 'apartments':apartment, 'move_in': move_in, 'move_out': move_out, 'date': date})
+
+@login_required(login_url='../../appUser/login')
+def delete(request, Post_id):
+    if request.method=='POST':
+        with connection.cursor() as c:
+            c.execute("delete from post_post where Post_id = %s", [Post_id])
+        return redirect('../../')
+    return render(request, 'appUser/deletePost.html')

@@ -62,18 +62,19 @@ hr {
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
+              <li><a href="{%url 'post:index' %}">Posts</a></li>
               <li><a href="#">About</a></li>
               <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <!-- IF USER Logged in -->
               {% if user.is_authenticated %}
-                <li><a href="appUser/profile">Profile<i class="fas fa-user"></i></a></li>
-                <li><a href="appUser/logout">Log out<i class="fas fa-user"></i></a></li>
+              <li><a href="{%url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+              <li><a href="{%url 'appUser:post' %}">My post <i class="fas fa-user"></i></a></li>
+              <li><a href="{%url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
               <!-- Not Logged in -->
-                <li><a href="appUser/register">Sign Up <i class="fas fa-user-plus"></i></a></li>
-                <li><a href="appUser/login">Log in <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:register' %}">Sign Up <i class="fas fa-user-plus"></i></a></li>
+                <li><a href="{%url 'appUser:login' %}">Log in <i class="fas fa-user"></i></a></li>
               {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->

@@ -6,6 +6,7 @@ from collections import namedtuple
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 # Create your views here.
@@ -50,6 +51,8 @@ def Insertrecord(request):
         c.execute("select Name, ApartmentID from apartment_apartment")
         result = namedtuplefetchall(c)
     
+    date = str(datetime.date(datetime.now()))
+
     # form
     if request.method=='POST':
         if request.POST.get('Post_title') and request.POST.get('Duration') \
@@ -116,9 +119,9 @@ def Insertrecord(request):
                                 where id = %s", [saverecord.id_id])
             return redirect('../')
         else:
-            return render(request, 'post/insertpost.html', {'apartments': result})
+            return render(request, 'post/insertpost.html', {'apartments': result, 'date' : date})
     else:
-        return render(request, 'post/insertpost.html', {'apartments': result})
+        return render(request, 'post/insertpost.html', {'apartments': result, 'date' : date})
 
 def Filter(request):
     # return apartment list
