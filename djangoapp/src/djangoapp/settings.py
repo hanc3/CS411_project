@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'post',
     'crispy_forms',
     'apartment',
+    'likeposts'
 ]
 
 MIDDLEWARE = [

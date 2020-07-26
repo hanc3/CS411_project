@@ -28,7 +28,7 @@ def register(request):
                 INSERT INTO appUser_appuser (id, username, gender, bio, phone, num_of_post, user_id)
                 VALUES ({1}, \"{2}\", \"{3}\", \"{4}\", \"{5}\", {6}, @cur_id);
              """.format(username, 0, username, gender, "", phone, 0))
-            
+            cursor.execute("commit")
 
             # display success msg
             messages.success(request, f'{username} - Your account has been created! You are now able to log in!')
