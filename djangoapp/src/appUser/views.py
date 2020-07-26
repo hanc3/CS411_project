@@ -3,7 +3,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 from .forms import UserRegisterForm
+from collections import namedtuple
 
+
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
 # Create your views here.
 def register(request):
     # if it's a POST request
@@ -42,6 +49,16 @@ def register(request):
 
 @login_required(login_url='../login')
 def profile(request):
+    savebio = ''
+    currentuser = ''
+    if request.method == 'POST':
+        if request.POST.get('Bio'):
+            savebio = request.POST.get('Bio')
+            currentuser = request.user.username
+        with connection.cursor() as c1:
+            c1.execute("update appUser_appuser set bio = %s where username = %s", [savebio, currentuser])
+            # value = namedtuplefetchall(c1)
+        
     return render(request, 'appUser/profile.html', {})
 
 

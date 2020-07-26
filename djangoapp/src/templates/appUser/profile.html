@@ -4,10 +4,28 @@
    <div class="content-section">
        <div class="media">
             <!-- TODO: Fix Image URL!!! -->
-           <img class="rounded-circle account-img" src="{{ user.appuser.image.url }}">
+           <img class="rounded-circle account-img" src="{{ user.appuser.image.url }}" style="width: 30%; height: 30%; border-radius: 50%; border: 2px solid black;">
            <div class="media-body">
-               <h2 class="account-heading">{{ user.username }}</h2>
-               <p class="text-secondary">{{ user.email }}</p>
+               <h2 class="account-heading" style="color: black; font-family: Lato;
+               font-weight: 700;">{{ user.username }}</h2>
+               <div><p class="text-secondary" style="color: black; font-family: Lato;
+                font-weight: 700;">Contact: {{ user.appuser.phone }}</p></div>
+                <div style="padding: 5px 10px;">
+                {% if user.appuser.bio %}
+                    <div><p class="text-secondary" style="color: black; font-family: Lato;
+                            font-weight: 700;">{{ user.appuser.bio }}</p></div>
+                {% else %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="bio" style="color: black; font-family: Lato;
+                            font-weight: 700;">Edit your bio <button type="submit"><span><i class="fas fa-wrench" aria-hidden="true"></i></span></button></label>
+                            <textarea class="form-control" id="bio" rows="3" style="border-width: 3px" name="Bio"></textarea>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+            
            </div>
        </div>
        <!-- From Here -->
