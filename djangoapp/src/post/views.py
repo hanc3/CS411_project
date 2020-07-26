@@ -153,9 +153,17 @@ def Filter(request):
             query.append('p.Move_in_date >= %s ')
             value.append(request.POST.get('Move_out_date'))
 
-        # if request.POST.get('Duration'):
-        #     print("duration:")
-        #     print(request.POST.get('Duration'))
+        if request.POST.get('Duration'):
+            query.append('p.Duration = %s ')
+            value.append(request.POST.get('Duration'))
+
+        if request.POST.get('Bathroom'):
+            query.append('p.Bathroom = %s ')
+            value.append(request.POST.get('Bathroom'))
+        
+        if request.POST.get('Bedroom'):
+            query.append('p.Bedroom = %s ')
+            value.append(request.POST.get('Bedroom'))
 
         order = request.POST.get('order')
 
