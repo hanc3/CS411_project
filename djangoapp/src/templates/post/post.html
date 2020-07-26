@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <head>
     <title>New Post</title>
@@ -129,3 +130,30 @@
 
 </body>
 </html>
+=======
+{% extends "appUser/base.html" %}
+{% block content %}
+
+    <!-- success msg  -->
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade-in">
+            <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success! </strong> {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% if postlist %}
+        <ul>
+        {% for post in postlist %}
+            <li><a href="{%url 'post:detail' post.Post_id %}">{{ post.Post_title }}</a></li>
+        {% endfor %}
+        </ul>
+        <a href="{%url 'post:insert' %}">Start new post</a>
+    {% else %}
+        <p>No post are available.</p>
+        <a href="{%url 'post:insert' %}">Start new post</a>
+    {% endif %}
+
+{% endblock content %}
+>>>>>>> e4b37dd19724e481cbf2358c04f1fdf27e55579b

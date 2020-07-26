@@ -111,9 +111,23 @@ def Insertrecord(request):
 
                 # update number of post of the user
                 with connection.cursor() as c:
+<<<<<<< HEAD
                     c.execute(" update appuser_appuser\
                                 set num_of_post = num_of_post + 1\
                                 where id = %s", [saverecord.id_id])
+=======
+                    c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Duration, Apartment)\
+                                value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration, saverecord.Apartment])
+
+            # update number of post of the user
+            with connection.cursor() as c:
+                c.execute(" update appuser_appuser\
+                            set num_of_post = num_of_post + 1\
+                            where id = %s", [saverecord.id_id])
+            
+            messages.success(request, 'Post successfully')
+            # TODO: right now it redirects to all posts, better go to the detailed page.
+>>>>>>> e4b37dd19724e481cbf2358c04f1fdf27e55579b
             return redirect('../')
         else:
             return render(request, 'post/insertpost.html', {'apartments': result})
