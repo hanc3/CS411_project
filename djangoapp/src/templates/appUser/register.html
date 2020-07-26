@@ -1,23 +1,23 @@
-{% extends "appUser/base.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
             <!-- FORM -->
-            <fieldset class="form-group" style="font-weight: 600; color: black;">
+            <fieldset class="form-group" style="font-weight: 600; color: black; margin-left: 7%;">
                 <legend class="border-bottom mb-4">Create New Account</legend>
                 {{ form|crispy }}
             </fieldset>
             <!-- Sign Up BUTTON -->
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 7%;">
                 <button class="btn btn-primary" type="submit">Sign Up</button>
             </div>
         </form>
         <!-- Sign In Option -->
         <div class="border-top pt-3">
-            <small class="text-muted">
-                Already Have An Account? <a class="ml-2" href="../login">Sign In</a>
+            <small class="text-muted" style="margin-left: 35%;">
+                Already Have An Account? <a class="ml-2" href="../login"> Sign In</a>
             </small>
         </div>
     </div>

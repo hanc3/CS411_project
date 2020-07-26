@@ -1,8 +1,7 @@
-{% extends "appUser/base.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <div>
         <form method="POST">
             {% csrf_token %}
             <!-- success msg -->
@@ -15,21 +14,20 @@
             {% endfor %}
             {% endif %}
             <!-- FORM -->
-            <fieldset class="form-group" style="font-weight: 600; color: black;">
+            <fieldset class="form-group" style="font-weight: 600; color: black; margin-left: 7%;">
                 <legend class="border-bottom mb-4">Log In</legend>
                 {{ form|crispy }}
             </fieldset>
             <!-- Sign Up BUTTON -->
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 7%;">
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>
         <!-- Sign In Option -->
         <div class="border-top pt-3">
-            <small class="text-muted" >
-                <span style="color: black">Need an account?</span> <a class="ml-2" href="../register" style="color:blue">Sign Up</a>
+            <small class="text-muted" style="margin-left: 7%;">
+                Already Have An Account? <a class="ml-2" href="../register"> Sign In</a>
             </small>
-        </div>
         </div>
     </div>
 {% endblock content %}
