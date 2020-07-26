@@ -74,12 +74,12 @@ hr {
             <ul class="nav navbar-nav navbar-right">
               <!-- IF USER Logged in -->
               {% if user.is_authenticated %}
-                <li><a href="http://localhost:8000/appUser/profile">Profile <i class="fas fa-user"></i></a></li>
-                <li><a href="http://localhost:8000/appUser/logout">Log out <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
               <!-- Not Logged in -->
-                <li><a href="http://localhost:8000/appUser/register">Sign Up <i class="fas fa-user-plus"></i></a></li>
-                <li><a href="http://localhost:8000/appUser/login">Log in <i class="fas fa-user"></i></a></li>
+                <li><a href="{%url 'appUser:register' %}">Sign Up <i class="fas fa-user-plus"></i></a></li>
+                <li><a href="{%url 'appUser:login' %}">Log in <i class="fas fa-user"></i></a></li>
               {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->
