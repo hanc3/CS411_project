@@ -1,0 +1,15 @@
+{% extends "appUser/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+   <div class="content-section">
+       <div class="media">
+            <!-- TODO: Fix Image URL!!! -->
+           <img class="rounded-circle account-img" src="{{ user.appuser.image.url }}">
+           <div class="media-body">
+               <h2 class="account-heading">{{ user.username }}</h2>
+               <p class="text-secondary">{{ user.email }}</p>
+           </div>
+       </div>
+       <!-- From Here -->
+   </div>
+{% endblock content %}

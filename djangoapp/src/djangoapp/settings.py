@@ -40,7 +40,9 @@ INSTALLED_APPS = [
 
     # own app
     'appUser',
-    'post'
+    'post',
+    'crispy_forms',
+    'apartment',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRIPSY_TEMPLATE_PACK = 'bootstrap4'
+
+# After login succesfully, redirect to homepage
+LOGIN_REDIRECT_URL = 'home'
+# NOTE: say if we want to access a page
+# that requires logging in, this will redirect the 
+# page to log-in page first
+# LOGIN_URL = '../login'
+
+# TODO: FIX IMAGE URL! 
+# NOTE: Place to store user img!
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+

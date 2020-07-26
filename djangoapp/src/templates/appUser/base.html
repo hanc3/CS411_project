@@ -18,6 +18,7 @@
 }
 html {
   height: 100%;
+  max-height: 100%;
 }
 h1 {
   font-size: 5em;
@@ -36,12 +37,17 @@ hr {
 }
 #content {
   text-align: center;
-  padding-top: 25%;
-  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
-               0px 8px 13px rgba(0,0,0,0.1),
-               0px 18px 23px rgba(0,0,0,0.1);
+  margin: auto;
+  /* margin-top: 20%; */
 }
-
+.content-section {
+    width: 33.3%;
+    margin: auto;
+    margin-top: 10%;
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 5%;
+}
          
     </style>
 </head>
@@ -68,8 +74,8 @@ hr {
             <ul class="nav navbar-nav navbar-right">
               <!-- IF USER Logged in -->
               {% if user.is_authenticated %}
-                <li><a href="appUser/profile">Profile<i class="fas fa-user"></i></a></li>
-                <li><a href="appUser/logout">Log out<i class="fas fa-user"></i></a></li>
+                <li><a href="appUser/profile">Profile <i class="fas fa-user"></i></a></li>
+                <li><a href="appUser/logout">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
               <!-- Not Logged in -->
                 <li><a href="appUser/register">Sign Up <i class="fas fa-user-plus"></i></a></li>
@@ -81,12 +87,7 @@ hr {
       </nav>
   <div class="container">
     <div id="content"class="row">
-      <div class="col-lg-12">
-        <h1>Purrfect Match</h1>
-        <h3>The most popular Renting App in UIUC</h3>
-        <hr>
-        <button class="btn-default btn-lg"><i class="fas fa-paw"></i> Get Started!</button>
-      </div>
+      {% block content %}{% endblock %}
     </div>
   </div>
 </body>

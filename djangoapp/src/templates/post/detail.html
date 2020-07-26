@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+    <title>New Post</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
+    <style>
+        body {
+        /* text-align: center;
+        padding-top: 25%; */
+        background-color: #ccf2ff;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      html {
+          height: 100%;
+      }
+      .title {
+        font-family: 'Yanone Kaffeesatz', sans-serif;
+        text-transform: uppercase;
+      }
+      .subtitle {
+        font-family: 'Montserrat', sans-serif;
+      }
+      .post_info {
+          margin: 60px;
+      }
+      .description {
+          margin-top: 80px;
+          font-family: 'Yanone Kaffeesatz', sans-serif;
+      }
+      .img-container {
+          text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Purrfect Match</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="/post">Posts</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Sign Up <i class="fas fa-user-plus"></i></a></li>
+              <li><a href="#">Log in <i class="fas fa-user"></i></a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    <div class="img-container">
+        <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="Avatar" style="border-radius: 50%; width: 50%; height: 50%;">
+    </div>
+    <div class="post_info">
+    <div class="title">
+        <h1>{{ info.Post_title }}</h1>
+        <h1>$ {{ info.Price }}</h1>
+    </div>
+    <div class="subtitle">
+        <h3 style="float: left;"> Location: {{ info.Apartment }}</h3>
+        <h3 style="float: right">Created by: {{ info.Username_id }}</h3>
+    </div>
+    <div class="description">
+        <h4>{{ info.Description }}</h4>
+        <p>Available from {{ info.Move_in_date }} to {{ info.Move_out_date }}</p>
+        <p style="float: right;">Floor plan: {{ info.Bedroom }} Bedroom(s), {{ info.Bathroom }} Bathroom(s)</p>
+    </div>
+    <!-- <ul>
+    
+    
+    
+    <li>{{ info.Pub_date }}</li>
+    
+    <li>{{ info.Move_in_date }}</li>
+    <li>{{ info.Move_out_date }}</li>
+    <li>{{ info.Duration }}</li>
+    <li>{{ info.Price }}</li>
+    <li>{{ info.Bedroom }}</li>
+    <li>{{ info.Bathroom }}</li>
+    <li>{{ info.like }}</li>
+    </ul> -->
+    </div>
+</body>
+</html>

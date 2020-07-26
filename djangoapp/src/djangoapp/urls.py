@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from Pages.views import homepage_view
-from post.views import index
-from post.views import Insertrecord
+# for profile picture(static files)
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',homepage_view, name="home"),
     path('post/', include('post.urls')),
+    path('apartment/', include('apartment.urls')),
+    path('appUser/', include('appUser.urls')),
 ]
- 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
