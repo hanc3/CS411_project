@@ -57,7 +57,7 @@ def detail(request, Post_id):
             user = namedtuplefetchall(c)
         id_id = user[0].id
         # id_id, num_post, num_valid_post, num_search, num_valid_search, num_return_post, valid_percentage
-        print(recommend(id_id, 20, 15, 5, 1, 3, 0.4))
+        # print(recommend(id_id, 20, 15, 5, 1, 3, 0.4))
         view_time = timezone.now()
         with connection.cursor() as c1:
             c1.execute("insert into post_view_history(id_id, Post_id_id, View_time) \
@@ -447,8 +447,8 @@ def recommend(id_id, num_post, num_valid_post, num_search, num_valid_search, num
         with connection.cursor() as c:
             c.execute("drop view if exists recommendation")
             c.execute("create view recommendation as select * from post_post")
-    print(input_query)
-    print(value)
+    # print(input_query)
+    # print(value)
     with connection.cursor() as c:
         c.execute(" select Post_id\
                     from (\

@@ -83,10 +83,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gorentuiuc_djangoapp_mysql',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'USER': 'gorentuiuc_hanc3',
+        'PASSWORD': 'Ch19990327??',
+        'PORT': '8889'
     }
 }
 
