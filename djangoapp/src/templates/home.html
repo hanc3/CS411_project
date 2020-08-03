@@ -7,9 +7,9 @@
     <hr>
     <!-- TODO: FIX BUTTON href TO THE CORRESPONDING PAGE -->
     {% if user.is_authenticated %}
-      <button class="btn-default btn-lg" ><i class="fas fa-home" href="{%url 'post:index' %}"></i> Find Your Home Now!</button>
+      <a class="btn-default btn-lg" href="{% url 'post:index' %}"><i class="fas fa-home"></i> Find Your Home Now!</a>
     {% else %}
-      <button class="btn-default btn-lg" ><i class="fas fa-home" href="{%url 'appUser:register' %}"></i> Get Started!</button>
+      <a class="btn-default btn-lg" href="{% url 'appUser:register' %}"><i class="fas fa-home"></i> Get Started!</a>
     {% endif %}
   </div>
 

@@ -20,3 +20,15 @@ class UserRegisterForm(UserCreationForm):
         model = User
         # prompt order
         fields = ['username', 'phone', 'gender', 'password1', 'password2']
+
+
+class apartmentForm(forms.Form):
+    apartment_name = forms.CharField(widget=forms.TextInput(attrs={'name': 'Apartment Name'}))
+    description = forms.CharField(widget=forms.TextInput(attrs={'description': 'Description'}))
+    address = forms.CharField(widget=forms.TextInput(attrs={'address': 'Address'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'email':'Email'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={'phone': 'Phone'}))
+    pet = forms.BooleanField(required=False)
+    printer = forms.BooleanField(required=False)
+    pool = forms.BooleanField(required=False)
+    gym = forms.BooleanField(required=False)

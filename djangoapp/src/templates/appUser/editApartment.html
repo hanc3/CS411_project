@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- FORM -->
+            <fieldset class="form-group" style="font-weight: 600; color: black; padding:20px;">
+                <legend class="border-bottom mb-4">Add New Apartment (SuperUser ONLY)</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <!-- Sign Up BUTTON -->
+            <div class="form-group" style="padding:20px;">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

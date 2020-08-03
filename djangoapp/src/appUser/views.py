@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import connection
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, apartmentForm
 from collections import namedtuple
 from datetime import datetime
+
 
 def namedtuplefetchall(cursor):
     "Return all rows from a cursor as a namedtuple"
@@ -172,3 +173,35 @@ def delete(request, Post_id):
             c.execute("delete from post_post where Post_id = %s", [Post_id])
         return redirect('../../')
     return render(request, 'appUser/deletePost.html')
+
+
+# Only Super User can access
+@user_passes_test(lambda u: u.is_superuser)
+def editApartment(request):
+    # if it's a POST request
+    if request.method == 'POST':
+        form = apartmentForm(request.POST)
+        if form.is_valid():
+            # get form info
+            # String
+            name = form.cleaned_data.get('apartment_name')
+            desc = form.cleaned_data.get('description')
+            email = form.cleaned_data.get('email')
+            phone = form.cleaned_data.get('phone')
+            addr = form.cleaned_data.get('address')
+            # True/False (converted to 1/0)
+            pet = int(form.cleaned_data.get('pet'))
+            printer = int(form.cleaned_data.get('printer'))
+            pool = int(form.cleaned_data.get('pool'))
+            gym = int(form.cleaned_data.get('gym'))
+
+            # Also write SQL Query to store it into apartment table
+            cursor = connection.cursor()
+            cursor.execute("""      
+                INSERT INTO apartment_apartment (Name, Description, Location, Email, Phone, Pet_friendly, Printer, Swimming_pool, Gym)
+                VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", {5}, {6}, {7}, {8});
+                """.format(name, desc, addr, email, phone, pet, printer, pool, gym))
+
+    else:
+        form = apartmentForm()
+    return render(request, 'appUser/editApartment.html',{'form':form})
