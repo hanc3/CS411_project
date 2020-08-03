@@ -5,18 +5,18 @@
         <form method="POST">
             {% csrf_token %}
             <!-- FORM -->
-            <fieldset class="form-group" style="font-weight: 600; color: black; margin-left: 7%;">
+            <fieldset class="form-group" style="font-weight: 600; color: black; padding: 20px;">
                 <legend class="border-bottom mb-4">Create New Account</legend>
                 {{ form|crispy }}
             </fieldset>
             <!-- Sign Up BUTTON -->
-            <div class="form-group" style="margin-left: 7%;">
+            <div class="form-group" style="padding:20px;">
                 <button class="btn btn-primary" type="submit">Sign Up</button>
             </div>
         </form>
         <!-- Sign In Option -->
         <div class="border-top pt-3">
-            <small class="text-muted" style="margin-left: 7%;">
+            <small class="text-muted" style="padding:20px;">
                 Already Have An Account? <a class="ml-2" href="../login"> Sign In</a>
             </small>
         </div>

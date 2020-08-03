@@ -94,6 +94,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                  <li><a href="{% url 'appUser:editApartment' %}" style="color:green">Super User Edit <i class="fas fa-user"></i></a></li>
+                {% endif %}
                 <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
                 <li><a href="{% url 'appUser:post' %}">My post <i class="fas fa-user"></i></a></li>
                 <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
