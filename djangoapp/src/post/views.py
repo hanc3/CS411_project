@@ -40,8 +40,18 @@ def index(request):
 # detail of the post
 def detail(request, Post_id):
     with connection.cursor() as c:
-        c.execute("select * from post_post where Post_id = %s",[Post_id])
+        c.execute("select * from post_post where Post_id = %s;\
+                   update post_post set Views = Views + 1 where Post_id = %s",[Post_id, Post_id])
         result = namedtuplefetchall(c)
+    if request.user.is_authenticated:
+        with connection.cursor() as c:
+            c.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
+            user = namedtuplefetchall(c)
+        id_id = user[0].id
+        view_time = timezone.now()
+        with connection.cursor() as c1:
+            c1.execute("insert into post_view_history(id_id, Post_id_id, View_time) \
+                        value(%s, %s, %s)", [id_id, Post_id, view_time])
     return render(request, 'post/detail.html', {'info': result[0]})
 
 @login_required(login_url='../../appUser/login')
@@ -128,45 +138,78 @@ def Filter(request):
     with connection.cursor() as c:
         c.execute("select Name, ApartmentID from apartment_apartment")
         apartment = namedtuplefetchall(c)
+    
+    with connection.cursor() as c:
+        c.execute("select Post_id, Post_title, Description from post_post order by Pub_date desc")
+        result = namedtuplefetchall(c)
     query = []
     value = []
+    history_query = []
+    search = False
     if request.method=='POST':
         if request.POST.get('Pet_friendly'):
             query.append('a.Pet_friendly = %s ')
             value.append(1)
+            history_query.append('Pet_friednly')
+            search = True
+
         if request.POST.get('Swimming_pool'):
             query.append('a.Swimming_pool = %s ')
             value.append(1)
+            history_query.append('Swimming_pool')
+            search = True
+
         if request.POST.get('Printer'):
             query.append('a.Printer = %s ')
             value.append(1)
+            history_query.append('Printer')
+            search = True
+
         if request.POST.get('Gym'):
             query.append('a.Gym = %s ')
             value.append(1)
+            history_query.append('Gym')
+            search = True
 
-        if request.POST.get('Price'):
+        if request.POST.get('Price') and request.POST.get('Price') != '0':
             query.append('p.Price <= %s ')
             value.append(request.POST.get('Price'))
+            history_query.append('Price')
+            search = True
+
         
         if request.POST.get('Move_in_date'):
             query.append('p.Move_in_date <= %s ')
             value.append(request.POST.get('Move_in_date'))
+            history_query.append('Move_in_date')
+            search = True
         
         if request.POST.get('Move_out_date'):
             query.append('p.Move_in_date >= %s ')
             value.append(request.POST.get('Move_out_date'))
+            history_query.append('Move_out_date')
+            search = True
 
         if request.POST.get('Duration'):
             query.append('p.Duration = %s ')
             value.append(request.POST.get('Duration'))
+            history_query.append('Duration')
+            search = True
 
         if request.POST.get('Bathroom'):
             query.append('p.Bathroom = %s ')
             value.append(request.POST.get('Bathroom'))
+            history_query.append('Bathroom')
+            search = True
         
         if request.POST.get('Bedroom'):
             query.append('p.Bedroom = %s ')
             value.append(request.POST.get('Bedroom'))
+            history_query.append('Bedroom')
+            search = True
+
+        if search is False:
+            return render(request, 'post/filter_result.html', {'postlist': result, 'apartments': apartment})
 
         order = request.POST.get('order')
 
@@ -181,7 +224,29 @@ def Filter(request):
         with connection.cursor() as c:
             c.execute(input_query, value)
             result = namedtuplefetchall(c)
+        
+        if request.user.is_authenticated:
+            input_history = 'insert into post_search_history(id_id,Search_time,'
+            input_value = ' value(%s,%s,'
+            for i in range(len(history_query)):
+                input_history += history_query[i]
+                input_value += '%s'
+                if (i != len(history_query) - 1):
+                    input_history += ','
+                    input_value += ','
+            
+            input_history = input_history + ')' + input_value + ')'
+            with connection.cursor() as c:
+                c.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
+                user = namedtuplefetchall(c)
+            id_id = user[0].id
+            search_time = timezone.now()
+            value.insert(0, search_time)
+            value.insert(0, id_id)
+            with connection.cursor() as c1:
+                c1.execute(input_history, value)
         return render(request, 'post/filter_result.html', {'postlist': result, 'apartments': apartment})
 
     else:
         return render(request, 'post/filter.html', {'apartments': apartment})
+

@@ -14,4 +14,4 @@ class appUser(models.Model):
     num_of_post =   models.IntegerField(default=0)
 
     def __str__(self):
-        return "ID:{:<5}".format(self.user.id) + "USERNAME: {}".format(self.user.username) 
+        return "ID:{:<5}".format(self.user.id) + "USERNAME: {}".format(self.user.username)

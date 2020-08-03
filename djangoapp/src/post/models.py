@@ -22,3 +22,24 @@ class post(models.Model):
     Bedroom         =   models.IntegerField()
     Bathroom        =   models.IntegerField()
     Likes           =   models.IntegerField()
+    Views           =   models.IntegerField()
+
+class view_history(models.Model):
+    id          =   models.ForeignKey(appUser, on_delete=models.CASCADE)
+    Post_id     =   models.ForeignKey(post, on_delete=models.CASCADE)
+    View_time   =   models.DateTimeField(primary_key=True)
+
+class search_history(models.Model):
+    id              =   models.ForeignKey(appUser, on_delete=models.CASCADE)
+    Search_time     =   models.DateTimeField(primary_key=True)
+    Move_in_date    =   models.DateField()
+    Move_out_date   =   models.DateField()
+    Duration        =   models.IntegerField()
+    Price           =   models.DecimalField(max_digits=7, decimal_places=2)
+    Bedroom         =   models.IntegerField()
+    Bathroom        =   models.IntegerField()
+    Pet_friendly    =   models.IntegerField()
+    Printer         =   models.IntegerField()
+    Swimming_pool   =   models.IntegerField()
+    Gym             =   models.IntegerField()
+
