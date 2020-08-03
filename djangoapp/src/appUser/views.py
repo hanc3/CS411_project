@@ -40,7 +40,7 @@ def register(request):
             
 
             # display success msg
-            messages.success(request, f'{username} - Your account has been created! You are now able to log in!')
+            messages.success(request, '{} - Your account has been created! You are now able to log in!'.format(username))
             return redirect('../login')
     else:
         # Empty Form
