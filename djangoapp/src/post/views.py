@@ -24,7 +24,12 @@ def index(request):
     with connection.cursor() as c:
         c.execute("select Post_id, Post_title, Description, Price from post_post order by Pub_date desc")
         result = namedtuplefetchall(c)
-    # recommend(id_id, 20, 15, 5, 1, 3, 0.4)
+    if request.user.is_authenticated:
+        with connection.cursor() as c:
+            c.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
+            user = namedtuplefetchall(c)
+        id_id = user[0].id
+        recommendation = recommend(id_id, 20, 15, 5, 1, 3, 0.4)
     if request.method=='POST':
         if request.POST.get('search'):
             title = '%' + str(request.POST.get('search')) + '%'
@@ -52,7 +57,7 @@ def detail(request, Post_id):
             user = namedtuplefetchall(c)
         id_id = user[0].id
         # id_id, num_post, num_valid_post, num_search, num_valid_search, num_return_post, valid_percentage
-        # print(recommend(id_id, 20, 15, 5, 1, 3, 0.4))
+        print(recommend(id_id, 20, 15, 5, 1, 3, 0.4))
         view_time = timezone.now()
         with connection.cursor() as c1:
             c1.execute("insert into post_view_history(id_id, Post_id_id, View_time) \
@@ -442,8 +447,8 @@ def recommend(id_id, num_post, num_valid_post, num_search, num_valid_search, num
         with connection.cursor() as c:
             c.execute("drop view if exists recommendation")
             c.execute("create view recommendation as select * from post_post")
-    # print(input_query)
-    # print(value)
+    print(input_query)
+    print(value)
     with connection.cursor() as c:
         c.execute(" select Post_id\
                     from (\
@@ -454,7 +459,7 @@ def recommend(id_id, num_post, num_valid_post, num_search, num_valid_search, num
                     limit %s",\
                     [search_history[0].num_pet, search_history[0].num_swimming, search_history[0].num_printer, search_history[0].num_gym, num_return_post])
         posts = namedtuplefetchall(c)
-        # c.execute("drop view if exists recommendation")
+        c.execute("drop view if exists recommendation")
 
     return_list = []
     for post in posts:
