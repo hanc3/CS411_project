@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="search-container">
+  <form method="POST">
+  {% csrf_token %}
+    <input type="text" id="search" name="search" style="width: 50%;" placeholder="Search...">
+    <button type="submit"><span><i class="fas fa-search"></i></span></button>
+    <span><a href="{%url 'post:filter' %}" class="btn btn-outline-info" style="font-family: 'Roboto', sans-serif;">Filter post <span><i class="fas fa-filter"></i></span></a></span>
+</form>
 
+</div>
   {% if postlist %}
   <div class="grid-container">
     {% for post in postlist %}
@@ -26,12 +34,5 @@
     </div>
   {% endif %}
 
-  <form method="POST" style="color:black;">
-      {% csrf_token %}
-      <div class="form-group"></div>
-        <label for="search">Search Post:</label>
-        <input type="text" id="search" name="search">
-      </div>
-      <button type="submit"><span><i class="fas fa-search"></i></span></button>
-  </form>
+  
 {% endblock content %}
