@@ -93,7 +93,19 @@ def detail(request, Post_id):
         with connection.cursor() as c1:
             c1.execute("insert into post_view_history(id_id, Post_id_id, View_time) \
                         values(%s, %s, %s)", [id_id, Post_id, view_time])
-    return render(request, 'post/detail.html', {'info': result[0]})
+
+        # join user + post
+        with connection.cursor() as c2:
+            c2.execute(""" 
+                SELECT Users.username, Users.phone, Users.email FROM\
+                (SELECT appUser_appuser.username AS username, appUser_appuser.phone AS phone, auth_user.email AS email, appUser_appuser.id AS id FROM appUser_appuser JOIN auth_user ON appUser_appuser.user_id = auth_user.id) AS Users\
+                WHERE Users.id = {}
+            """.format(id_id))
+            user_info_list = namedtuplefetchall(c2)
+            if len(user_info_list) > 0:
+                user_info = user_info_list[0]
+
+    return render(request, 'post/detail.html', {'info': result[0], 'user_info':user_info})
 
 @login_required(login_url='../../appUser/login')
 def Insertrecord(request):
