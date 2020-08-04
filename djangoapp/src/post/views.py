@@ -106,10 +106,11 @@ def Insertrecord(request):
 
     # form
     if request.method=='POST':
-        if request.POST.get('Post_title') and request.POST.get('Duration') \
+        if request.POST.get('Post_title') \
             and request.POST.get('ApartmentID') and request.POST.get('Move_in_date')\
             and request.POST.get('Move_out_date') and request.POST.get('Price')\
-            and request.POST.get('Bedroom') and request.POST.get('Bathroom'):
+            and request.POST.get('Bedroom') and request.POST.get('Bathroom')\
+            and request.POST.get('Move_out_date') > request.POST.get('Move_in_date'):
             
             # store the values
             saverecord=post()
@@ -121,7 +122,8 @@ def Insertrecord(request):
             saverecord.Price = request.POST.get('Price')
             saverecord.Bedroom = request.POST.get('Bedroom')
             saverecord.Bathroom = request.POST.get('Bathroom')
-            saverecord.Duration = request.POST.get('Duration')
+            delta = saverecord.Move_out_date - saverecord.Move_in_date
+            saverecord.Duration = int(round(delta.days))
 
             # id is the primary key of appUser, but request.user.id gets the id of auth_user table
             with connection.cursor() as c1:

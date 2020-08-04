@@ -134,10 +134,6 @@ def editPost(request, Post_id):
             query.append('Move_out_date = %s ')
             value.append(request.POST.get('Move_out_date'))
         
-        if request.POST.get('Duration') and request.POST.get('Duration') != result[0].Duration:
-            query.append('Duration = %s ')
-            value.append(request.POST.get('Duration'))
-        
         if request.POST.get('Price') and request.POST.get('Price') != result[0].Price:
             query.append('Price = %s ')
             value.append(request.POST.get('Price'))
