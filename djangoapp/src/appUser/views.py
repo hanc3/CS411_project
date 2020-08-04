@@ -194,7 +194,7 @@ def editApartment(request):
             # Also write SQL Query to store it into apartment table
             cursor = connection.cursor()
             cursor.execute("""      
-                INSERT INTO apartment_apartment (Name, Description, Location, Email, Phone, Pet_friendly, Printer, Swimming_pool, Gym)
+                INSERT INTO apartment_apartment (Name, Description_a, Location, Email, Phone, Pet_friendly, Printer, Swimming_pool, Gym)
                 VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", {5}, {6}, {7}, {8});
                 """.format(name, desc, addr, email, phone, pet, printer, pool, gym))
 
