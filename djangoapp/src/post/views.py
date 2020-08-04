@@ -21,15 +21,44 @@ def namedtuplefetchall(cursor):
 
 # list the posts
 def index(request):
-    with connection.cursor() as c:
-        c.execute("select Post_id, Post_title, Description, Price from post_post order by Pub_date desc")
-        result = namedtuplefetchall(c)
+    exclude_post = []
     if request.user.is_authenticated:
         with connection.cursor() as c:
             c.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
             user = namedtuplefetchall(c)
         id_id = user[0].id
-        recommendation = recommend(id_id, 20, 15, 5, 1, 3, 0.4)
+        recommendation_result = recommend(id_id, 20, 15, 5, 1, 3, 0.4)
+        for item in recommendation_result:
+            exclude_post.append(item.Post_id)
+        number = 5 - len(recommendation_result)
+        top_view_result = top_views(number, exclude_post)
+        for item in top_view_result:
+            exclude_post.append(item.Post_id)
+    else:
+        top_view_result = top_views(5, exclude_post)
+        for item in top_view_result:
+            exclude_post.append(item.Post_id)
+    
+    query = []
+    input_query = " select Post_id, Post_title, Description, Price\
+                    from post_post "
+    if exclude_post:
+        input_query += 'where '
+    for i in range(len(exclude_post)):
+        input_query += ' Post_id != %s '
+        if i != len(exclude_post) - 1:
+            input_query += ' and '
+    input_query += 'order by Pub_date desc'
+
+    # print(input_query)
+    # print(exclude_post)
+
+    with connection.cursor() as c:
+        c.execute(input_query, exclude_post)
+        post = namedtuplefetchall(c)
+
+    result = recommendation_result + top_view_result + post
+
     if request.method=='POST':
         if request.POST.get('search'):
             title = '%' + str(request.POST.get('search')) + '%'
@@ -48,16 +77,18 @@ def index(request):
 # detail of the post
 def detail(request, Post_id):
     with connection.cursor() as c:
-        c.execute("select * from post_post where Post_id = %s;\
-                   update post_post set Views = Views + 1 where Post_id = %s",[Post_id, Post_id])
+        c.execute("drop view if exists post_detail")
+        c.execute("create view post_detail as select * from post_post where Post_id = %s", [Post_id])
+        c.execute("select * from post_detail p join apartment_apartment a on p.ApartmentID_id = a.ApartmentID;\
+                   update post_post set Views = Views + 1 where Post_id = %s",[Post_id])
         result = namedtuplefetchall(c)
+    with connection.cursor() as c:
+        c.execute("drop view if exists post_detail")
     if request.user.is_authenticated:
         with connection.cursor() as c:
             c.execute("select id from appUser_appUser where user_id = %s", [request.user.id])
             user = namedtuplefetchall(c)
         id_id = user[0].id
-        # id_id, num_post, num_valid_post, num_search, num_valid_search, num_return_post, valid_percentage
-        print(recommend(id_id, 20, 15, 5, 1, 3, 0.4))
         view_time = timezone.now()
         with connection.cursor() as c1:
             c1.execute("insert into post_view_history(id_id, Post_id_id, View_time) \
@@ -259,14 +290,22 @@ def Filter(request):
     else:
         return render(request, 'post/filter.html', {'apartments': apartment})
 
-def top_views(number):
+def top_views(number, recommend_post):
     start_time = timezone.now() - datetime.timedelta(days=45)
-    with connection.cursor() as c:
-        c.execute(" select Post_id, Post_title, Description, Price\
+    query = []
+    input_query = " select Post_id, Post_title, Description, Price\
                     from post_post\
-                    where Pub_date > %s\
-                    order by Views desc\
-                    limit %s", [number, start_time])
+                    where Pub_date > %s"
+    for i in range(len(recommend_post)):
+        input_query = input_query + ' and ' + ' Post_id != %s '
+    input_query += 'order by Views desc limit %s'
+    value = [start_time]
+    value = value + recommend_post
+    value.append(number)
+    # print(input_query)
+    # print(value)
+    with connection.cursor() as c:
+        c.execute(input_query, value)
         post = namedtuplefetchall(c)
     return post
 
@@ -337,15 +376,13 @@ def recommend(id_id, num_post, num_valid_post, num_search, num_valid_search, num
             print("price: " + str(price) + "; " + "bedroom: " + str(bedroom) + "; " + "bathroom: " + str(bathroom))
             with connection.cursor() as c:
                 c.execute("drop view if exists history")
-                c.execute(" select Post_id\
+                c.execute(" select Post_id, Post_title, Description, Price \
                             from post_post\
                             where Price > %s and Price < %s and Bedroom = %s and Bathroom = %s\
                             order by Views desc\
                             limit %s", [price - 50, price + 50, bedroom, bathroom, num_return_post])
                 posts = namedtuplefetchall(c)
-            for post in posts:
-                return_list.append(post.Post_id)
-            return return_list
+            return posts
         
     with connection.cursor() as c:
         c.execute(" select min(Move_in_date) as move_in, max(Move_out_date) as move_out, sum(Duration) as sum_duration, count(Duration) as num_duration, sum(Price) as sum_price, count(Price) as num_price, sum(Bedroom) as sum_bedroom, count(Bedroom) as num_bedroom, sum(Bathroom) as sum_bathroom, count(Bathroom) as num_bathroom, count(Pet_friendly) as num_pet, count(Printer) as num_printer, count(Swimming_pool) as num_swimming, count(Gym) as num_gym, count(Search_time) as num\
@@ -447,12 +484,12 @@ def recommend(id_id, num_post, num_valid_post, num_search, num_valid_search, num
         with connection.cursor() as c:
             c.execute("drop view if exists recommendation")
             c.execute("create view recommendation as select * from post_post")
-    print(input_query)
-    print(value)
+    # print(input_query)
+    # print(value)
     with connection.cursor() as c:
-        c.execute(" select Post_id\
+        c.execute(" select Post_id, Post_title, Description, Price\
                     from (\
-                        select r.Post_id, (a.Pet_friendly * %s + a.Swimming_pool * %s + a.Printer * %s + a.Gym * %s) as score\
+                        select r.Post_id, r.Post_title, r.Description, r.Price, (a.Pet_friendly * %s + a.Swimming_pool * %s + a.Printer * %s + a.Gym * %s) as score\
                         from recommendation r left outer join apartment_apartment a on r.ApartmentID_id = a.ApartmentID\
                     ) as sub\
                     order by score desc\
@@ -460,10 +497,6 @@ def recommend(id_id, num_post, num_valid_post, num_search, num_valid_search, num
                     [search_history[0].num_pet, search_history[0].num_swimming, search_history[0].num_printer, search_history[0].num_gym, num_return_post])
         posts = namedtuplefetchall(c)
         c.execute("drop view if exists recommendation")
-
-    return_list = []
-    for post in posts:
-        return_list.append(post.Post_id)
-    return return_list
-        
+    # print(posts)
+    return posts
     
