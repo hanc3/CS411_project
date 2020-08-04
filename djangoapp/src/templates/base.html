@@ -153,10 +153,14 @@
               {% if user.is_authenticated %}
                 {% if user.is_superuser %}
                   <li><a href="{% url 'appUser:editApartment' %}" style="color:green">Super User Edit <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:super_post' %}">Post <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
+                {% else %}
+                  <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:post' %}">My post <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
                 {% endif %}
-                <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
-                <li><a href="{% url 'appUser:post' %}">My post <i class="fas fa-user"></i></a></li>
-                <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
               <!-- Not Logged in -->
                 <li><a href="{%url 'appUser:register' %}">Sign Up <i class="fas fa-user-plus"></i></a></li>
