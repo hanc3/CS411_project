@@ -79,26 +79,16 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'gorentuiuc_djangoapp_mysql',
-#         'USER': 'gorentuiuc_hanc3',
-#         'PASSWORD': 'Ch19990327??',
-#         'PORT': '8889'
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gorentuiuc_djangoapp_mysql',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'USER': 'gorentuiuc_hanc3',
+        'PASSWORD': 'Ch19990327??',
+        'PORT': '8889'
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
