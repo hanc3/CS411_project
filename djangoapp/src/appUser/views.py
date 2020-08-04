@@ -6,7 +6,6 @@ from .forms import UserRegisterForm, apartmentForm
 from collections import namedtuple
 from datetime import datetime
 
-
 def namedtuplefetchall(cursor):
     "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
@@ -190,7 +189,6 @@ def editApartment(request):
             printer = int(form.cleaned_data.get('printer'))
             pool = int(form.cleaned_data.get('pool'))
             gym = int(form.cleaned_data.get('gym'))
-
             # Also write SQL Query to store it into apartment table
             cursor = connection.cursor()
             cursor.execute("""      
