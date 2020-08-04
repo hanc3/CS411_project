@@ -7,9 +7,9 @@ from .models import appuser
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        appUser.objects.create(user=instance)
+        appuser.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
-    instance.appUser.save()
+    instance.appuser.save()
