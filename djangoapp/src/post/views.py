@@ -122,8 +122,9 @@ def Insertrecord(request):
             saverecord.Price = request.POST.get('Price')
             saverecord.Bedroom = request.POST.get('Bedroom')
             saverecord.Bathroom = request.POST.get('Bathroom')
-            delta = saverecord.Move_out_date - saverecord.Move_in_date
-            saverecord.Duration = int(round(delta.days))
+            date1 = datetime.datetime.strptime(saverecord.Move_out_date, "%Y-%m-%d").date()
+            date2 = datetime.datetime.strptime(saverecord.Move_in_date, "%Y-%m-%d").date()
+            saverecord.Duration = int(round((date1 - date2).days / 30))
 
             # id is the primary key of appuser, but request.user.id gets the id of auth_user table
             with connection.cursor() as c1:
