@@ -125,7 +125,7 @@ def Insertrecord(request):
             delta = saverecord.Move_out_date - saverecord.Move_in_date
             saverecord.Duration = int(round(delta.days))
 
-            # id is the primary key of appUser, but request.user.id gets the id of auth_user table
+            # id is the primary key of appuser, but request.user.id gets the id of auth_user table
             with connection.cursor() as c1:
                 c1.execute("select id from appUser_appuser where user_id = %s", [request.user.id])
                 user = namedtuplefetchall(c1)
