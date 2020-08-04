@@ -92,7 +92,7 @@ def detail(request, Post_id):
         view_time = timezone.now()
         with connection.cursor() as c1:
             c1.execute("insert into post_view_history(id_id, Post_id_id, View_time) \
-                        value(%s, %s, %s)", [id_id, Post_id, view_time])
+                        values(%s, %s, %s)", [id_id, Post_id, view_time])
     return render(request, 'post/detail.html', {'info': result[0]})
 
 @login_required(login_url='../../appUser/login')
@@ -157,13 +157,13 @@ def Insertrecord(request):
                     saverecord.Description = request.POST.get('Description')
                     with connection.cursor() as c:
                         c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Description, Duration, Apartment)\
-                                    value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Description, saverecord.Duration, saverecord.Apartment])
+                                    values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Description, saverecord.Duration, saverecord.Apartment])
                 
                 # no Description
                 else:
                     with connection.cursor() as c:
                         c.execute(" insert into post_post(Post_title, id_id, ApartmentID_id, Pub_date, Move_out_date, Move_in_date, Price, Bedroom, Bathroom, Duration, Apartment)\
-                                    value(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration, saverecord.Apartment])
+                                    values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",[saverecord.Post_title, saverecord.id_id, saverecord.ApartmentID_id, saverecord.Pub_date, saverecord.Move_out_date, saverecord.Move_in_date, saverecord.Price, saverecord.Bedroom, saverecord.Bathroom, saverecord.Duration, saverecord.Apartment])
 
                 # update number of post of the user
                 with connection.cursor() as c:
@@ -269,7 +269,7 @@ def Filter(request):
         
         if request.user.is_authenticated:
             input_history = 'insert into post_search_history(id_id,Search_time,'
-            input_value = ' value(%s,%s,'
+            input_value = ' values(%s,%s,'
             for i in range(len(history_query)):
                 input_history += history_query[i]
                 input_value += '%s'
