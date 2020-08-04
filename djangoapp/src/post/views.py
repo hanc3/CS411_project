@@ -35,6 +35,7 @@ def index(request):
         for item in top_view_result:
             exclude_post.append(item.Post_id)
     else:
+        recommendation_result = []
         top_view_result = top_views(5, exclude_post)
         for item in top_view_result:
             exclude_post.append(item.Post_id)
