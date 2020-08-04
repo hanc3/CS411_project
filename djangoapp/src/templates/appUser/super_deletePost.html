@@ -1,0 +1,5 @@
+<form method='POST'>
+    {% csrf_token %}
+    <div id="insert"><button type="submit" class="btn-lg btn-primary">Delete the post</button></div>
+</form>
+<a href="{%url 'appUser:super_post' %}">Back<i class="fas fa-user"></i></a>
