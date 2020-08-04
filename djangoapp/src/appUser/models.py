@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
-class appUser(models.Model):
+class appuser(models.Model):
     user        =   models.OneToOneField(User, on_delete=models.CASCADE)
     username    =   models.CharField(max_length=255,blank=True)
     image       =   models.ImageField(default='default.jpg', upload_to='profile_pics')

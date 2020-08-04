@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='appUser',
+            name='appuser',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(blank=True, max_length=255)),
@@ -29,22 +29,22 @@ class Migration(migrations.Migration):
             ],
         ),
         AddDefaultValue(
-            model_name = 'appUser',
+            model_name = 'appuser',
             name = 'id',
             value = -1
         ),
         AddDefaultValue(
-            model_name = 'appUser',
+            model_name = 'appuser',
             name = 'bio',
             value = "Please add your bio here."
         ),
         AddDefaultValue(
-            model_name = 'appUser',
+            model_name = 'appuser',
             name = 'num_of_post',
             value = "0"
         ),
         AddDefaultValue(
-            model_name = 'appUser',
+            model_name = 'appuser',
             name = 'image',
             value = "profile_pics/default.jpg"
         )
