@@ -14,12 +14,13 @@ class UserRegisterForm(UserCreationForm):
     # email = forms.EmailField(required=True)
     gender = forms.CharField(label='What\'s your gender?', widget=forms.Select(choices=gender_choices))
     phone = forms.CharField(label='Phone')
+    email = forms.EmailField(label='Email')
 
     class Meta:
         # Configuration
         model = User
         # prompt order
-        fields = ['username', 'phone', 'gender', 'password1', 'password2']
+        fields = ['username', 'phone', 'email', 'gender', 'password1', 'password2']
 
 
 class apartmentForm(forms.Form):
