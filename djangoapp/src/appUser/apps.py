@@ -6,4 +6,4 @@ class AppuserConfig(AppConfig):
 
     def ready(self):
         """ Related to signals """        
-        import appUser.signals
+        import appuser.signals

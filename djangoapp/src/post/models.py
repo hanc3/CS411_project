@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
-from appUser.models import appUser
+from appUser.models import appuser
 from apartment.models import apartment
 
 # Create your models here.
