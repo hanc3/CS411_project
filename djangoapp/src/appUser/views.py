@@ -34,7 +34,7 @@ def register(request):
                 SET @cur_id = -1;
                 SELECT id INTO @cur_id FROM auth_user WHERE username = \'{0}\';
 
-                INSERT INTO appuser_appuser (id, username, gender, bio, phone, num_of_post, user_id)
+                INSERT INTO appUser_appuser (id, username, gender, bio, phone, num_of_post, user_id)
                 VALUES ({1}, \"{2}\", \"{3}\", \"{4}\", \"{5}\", {6}, @cur_id);
              """.format(username, 0, username, gender, "", phone, 0))
             
@@ -58,7 +58,7 @@ def profile(request):
             savebio = request.POST.get('Bio')
             currentuser = request.user.username
         with connection.cursor() as c1:
-            c1.execute("update appuser_appuser set bio = %s where username = %s", [savebio, currentuser])
+            c1.execute("update appUser_appuser set bio = %s where username = %s", [savebio, currentuser])
             # value = namedtuplefetchall(c1)
         
     return render(request, 'appUser/profile.html', {})
@@ -71,7 +71,7 @@ def update(request):
 @login_required(login_url='../../appUser/login')
 def post(request):
     with connection.cursor() as c1:
-        c1.execute("select id from appuser_appUser where user_id = %s", [request.user.id])
+        c1.execute("select id from appUser_appuser where user_id = %s", [request.user.id])
         user = namedtuplefetchall(c1)
     id_id = user[0].id
 

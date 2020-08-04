@@ -24,7 +24,7 @@ def index(request):
     exclude_post = []
     if request.user.is_authenticated:
         with connection.cursor() as c:
-            c.execute("select id from appuser_appuser where user_id = %s", [request.user.id])
+            c.execute("select id from appUser_appuser where user_id = %s", [request.user.id])
             user = namedtuplefetchall(c)
         id_id = user[0].id
         recommendation_result = recommend(id_id, 20, 15, 5, 1, 3, 0.4)
@@ -86,7 +86,7 @@ def detail(request, Post_id):
         c.execute("drop view if exists post_detail")
     if request.user.is_authenticated:
         with connection.cursor() as c:
-            c.execute("select id from appuser_appuser where user_id = %s", [request.user.id])
+            c.execute("select id from appUser_appuser where user_id = %s", [request.user.id])
             user = namedtuplefetchall(c)
         id_id = user[0].id
         view_time = timezone.now()
@@ -127,7 +127,7 @@ def Insertrecord(request):
 
             # id is the primary key of appUser, but request.user.id gets the id of auth_user table
             with connection.cursor() as c1:
-                c1.execute("select id from appuser_appuser where user_id = %s", [request.user.id])
+                c1.execute("select id from appUser_appuser where user_id = %s", [request.user.id])
                 user = namedtuplefetchall(c1)
             saverecord.id_id = user[0].id
             
@@ -167,7 +167,7 @@ def Insertrecord(request):
 
                 # update number of post of the user
                 with connection.cursor() as c:
-                    c.execute(" update appuser_appuser\
+                    c.execute(" update appUser_appuser\
                                 set num_of_post = num_of_post + 1\
                                 where id = %s", [saverecord.id_id])
             return redirect('../')
@@ -279,7 +279,7 @@ def Filter(request):
             
             input_history = input_history + ')' + input_value + ')'
             with connection.cursor() as c:
-                c.execute("select id from appuser_appuser where user_id = %s", [request.user.id])
+                c.execute("select id from appUser_appuser where user_id = %s", [request.user.id])
                 user = namedtuplefetchall(c)
             id_id = user[0].id
             search_time = timezone.now()
