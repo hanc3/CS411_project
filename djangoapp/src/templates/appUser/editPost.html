@@ -9,7 +9,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="post_title">Post Title</label>
-                    <input type="text" class="form-control" id="post_title" name="Post_title" value={{info.Post_title}}>
+                    <input type="text" class="form-control" id="post_title" name="Post_title" value="{{info.Post_title}}">
                 </div>
                 <div class="form-group">
                     <label for="apartment">Apartment</label>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" name="Description" value={{info.Description}}>
+                    <input type="text" class="form-control" id="description" name="Description" value="{{info.Description}}">
                 </div>
                 
                 <div class="form-group">
@@ -36,7 +36,7 @@
                     <label for="date_out">Move out Date</label>
                     <input type="date" id="date_out" name="Move_out_date" min="{{date}}" value="{{move_out}}">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="price">Price/month</label>
                     <input type="number" class="custom-range" id="price" name="Price" min="0" max="10000" value="{{info.Price}}">
