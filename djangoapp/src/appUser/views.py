@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import connection
-from .forms import UserRegisterForm, apartmentForm
+from .forms import UserRegisterForm, apartmentForm, updateProfile
 from collections import namedtuple
 from datetime import datetime
 
@@ -63,9 +63,35 @@ def profile(request):
     return render(request, 'appUser/profile.html', {})
 
 
-
+@login_required(login_url='../login')
 def update(request):
-    return render(request, 'appUser/update.html', {})
+    # if it's a POST request
+    if request.method == 'POST':
+        form = updateProfile(request.POST)
+        if form.is_valid():
+            currentuser = request.user.username
+            # get form info
+            # String
+            bio = form.cleaned_data.get('bio')
+            email = form.cleaned_data.get('email')
+            phone = form.cleaned_data.get('phone')
+            gender = form.cleaned_data.get('gender')
+            print(bio,email,phone,gender,currentuser)
+            # Also write SQL Query to store it into apartment table
+            cursor = connection.cursor()
+            cursor.execute("""      
+                UPDATE appUser_appuser 
+                SET gender=\"{0}\", bio=\"{1}\", phone=\"{2}\"
+                WHERE username = \"{4}\";
+                UPDATE auth_user
+                SET email=\"{3}\"
+                WHERE username = \"{4}\";
+                """.format(gender, bio, phone, email, currentuser))
+            return redirect("../profile")
+    else:
+        form = updateProfile()
+
+    return render(request, 'appUser/update.html', {'form':form})
 
 @login_required(login_url='../../appUser/login')
 def post(request):

@@ -33,3 +33,10 @@ class apartmentForm(forms.Form):
     printer = forms.BooleanField(required=False)
     pool = forms.BooleanField(required=False)
     gym = forms.BooleanField(required=False)
+
+
+class updateProfile(forms.Form):
+    bio = forms.CharField(widget=forms.TextInput(attrs={'bio': 'bio'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'email':'Email'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={'phone': 'Phone'}))
+    gender = forms.CharField(label='What\'s your gender?', widget=forms.Select(choices=gender_choices))
