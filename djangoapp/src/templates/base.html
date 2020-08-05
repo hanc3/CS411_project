@@ -143,6 +143,9 @@
         border-radius: 2%;
         opacity: 0.95;
       }
+      .grid-item.hidden {
+        display: none;
+      }
     </style>
 </head>
 <body>
@@ -202,15 +205,7 @@
   </div>
 </body>
 <script>
-   function truncateText(selector, maxLength) {
-        var element = document.querySelector(selector),
-            truncated = element.innerText;
-    
-        if (truncated.length > maxLength) {
-            truncated = truncated.substr(0,maxLength) + '...';
-        }
-        return truncated;
-    }
+   
     //You can then call the function with something like what i have below.
     var texts = document.getElementsByClassName('card-text');
     for (var i = 0; i < texts.length; i++) {
@@ -223,5 +218,10 @@
       console.log(1);
       texts[i].querySelector('p').innerText = truncated;
     }
+    document.querySelector('.loadmore').addEventListener('click', function() {
+    // get rp-detail element with toggle class
+    // then iterate and toggle class of each element
+    document.querySelectorAll('.grid-item.toggle').forEach(ele => ele.classList.toggle('hidden'))
+})
 </script>
 </html>

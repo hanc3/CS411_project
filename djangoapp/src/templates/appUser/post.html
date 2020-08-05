@@ -13,6 +13,7 @@
   {% if postlist %}
   <div class="grid-container">
     {% for post in postlist %}
+    {% if forloop.counter < 7 %}
       <div class="grid-item">
         <div class="card" style="width: 18em;">
             <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="Avatar" style="width:100%">
@@ -23,8 +24,24 @@
               <a href="{%url 'appUser:delete' post.Post_id %}" class="btn-sm btn-primary">Delete </a>
             </div>
         </div>
-      </div>  
+      </div> 
+    {% else %}
+    <div class="grid-item hidden toggle">
+      <div class="card" style="width: 18em;">
+          <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="Avatar" style="width:100%">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.Post_title }}</h5>
+            <div class="card-text"><p>{{ post.Description }}</p></div>
+            <a href="{%url 'appUser:editPost' post.Post_id %}" class="btn-sm btn-primary">Edit </a>
+            <a href="{%url 'appUser:delete' post.Post_id %}" class="btn-sm btn-primary">Delete </a>
+          </div>
+      </div>
+    </div> 
+    {% endif %}
     {% endfor %}
+  </div>
+  <div class="loadMore" style="text-align: center;">
+    <a href="#" class="btn btn-primary">Load More</a>
   </div>
   <div class="button"><a href="{%url 'post:insert' %}" class="btn btn-warning" >Start new post</a></div>
   {% else %}
