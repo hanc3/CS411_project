@@ -74,7 +74,7 @@
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 60%;
-        height: 50%;
+        height: 60%;
         background-color: white;
         color: black;
       }
@@ -88,6 +88,15 @@
           background-color: rgba(236, 233, 233, 0.863);
           padding: 10px 16px;
           text-overflow: ellipsis;
+      }
+      .card-text {
+        display: block;/* or inline-block */
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        overflow: hidden;
+        max-height: 5.2em;
+        line-height: 1.8em;
+        margin-bottom: 8px;
       }
       /* Add some padding inside the card container */
       .container {
@@ -126,6 +135,17 @@
         max-width: 50%;
         height: 20%;
       }
+      .update-form {
+        margin: auto;
+        margin-top: 100px;
+        background-color: white;
+        padding: 2em;
+        border-radius: 2%;
+        opacity: 0.95;
+      }
+      .grid-item.hidden {
+        display: none;
+      }
     </style>
 </head>
 <body>
@@ -153,10 +173,14 @@
               {% if user.is_authenticated %}
                 {% if user.is_superuser %}
                   <li><a href="{% url 'appUser:editApartment' %}" style="color:green">Super User Edit <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:super_post' %}">Post <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
+                {% else %}
+                  <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:post' %}">My post <i class="fas fa-user"></i></a></li>
+                  <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
                 {% endif %}
-                <li><a href="{% url 'appUser:profile' %}">Profile <i class="fas fa-user"></i></a></li>
-                <li><a href="{% url 'appUser:post' %}">My post <i class="fas fa-user"></i></a></li>
-                <li><a href="{% url 'appUser:logout' %}">Log out <i class="fas fa-user"></i></a></li>
               {% else %}
               <!-- Not Logged in -->
                 <li><a href="{%url 'appUser:register' %}">Sign Up <i class="fas fa-user-plus"></i></a></li>
@@ -181,16 +205,23 @@
   </div>
 </body>
 <script>
-  function truncateText(selector, maxLength) {
-    var element = document.querySelector(selector),
-        truncated = element.innerText;
-
-    if (truncated.length > maxLength) {
-        truncated = truncated.substr(0,maxLength) + '...';
+   
+    //You can then call the function with something like what i have below.
+    var texts = document.getElementsByClassName('card-text');
+    for (var i = 0; i < texts.length; i++) {
+      var element = texts[i].querySelector('p'),
+            truncated = element.innerText;
+    
+        if (truncated.length > 200) {
+            truncated = truncated.substr(0,200) + '...';
+        }
+      console.log(1);
+      texts[i].querySelector('p').innerText = truncated;
     }
-    return truncated;
-}
-//You can then call the function with something like what i have below.
-document.querySelector('p').innerText = truncateText('p', 250);
+    document.querySelector('.loadmore').addEventListener('click', function() {
+    // get rp-detail element with toggle class
+    // then iterate and toggle class of each element
+    document.querySelectorAll('.grid-item.toggle').forEach(ele => ele.classList.toggle('hidden'))
+})
 </script>
 </html>
