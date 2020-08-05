@@ -102,6 +102,26 @@
         <p>Username: {{user_info.username}}</p>
         <p>Email: {{user_info.email}}</p>
         <p>phone: {{user_info.phone}}</p>
+        {% if info.Pet_friendly == 1 %}
+          <p>Pet: Yes</p>
+        {% else %}
+          <p>Pet: No</p>
+        {% endif %}
+        {% if info.Gym == 1 %}
+          <p>Gym: Yes</p>
+        {% else %}
+          <p>Gym: No</p>
+        {% endif %}
+        {% if info.Swimming_pool == 1 %}
+          <p>Swimming pool: Yes</p>
+        {% else %}
+          <p>Swimming pool: No</p>
+        {% endif %}
+        {% if info.Printer == 1 %}
+          <p>Printer: Yes</p>
+        {% else %}
+          <p>Printer: No</p>
+        {% endif %}
     </div>
     </div>
 </body>
